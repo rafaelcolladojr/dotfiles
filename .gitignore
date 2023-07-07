@@ -1,0 +1,10 @@
+*
+!*/
+
+!alacritty/alacritty.yml
+!nvim/init.lua
+!skhd/skhdrc
+!yabai/yabairc
+!zsh/.zshenv
+!zsh/.zshrc
+!.gitignore
