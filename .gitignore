@@ -8,3 +8,4 @@
 !zsh/.zshenv
 !zsh/.zshrc
 !.gitignore
+!*/.gitignore
