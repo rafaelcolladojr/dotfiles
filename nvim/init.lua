@@ -261,7 +261,7 @@ cmp.setup({
 })
 
 lsp.set_preferences({
-  suggest_lsp_servers = false,
+  suggest_lsp_servers = true,
 })
 
 require('neodev').setup()
