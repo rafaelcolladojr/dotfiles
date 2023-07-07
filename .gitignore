@@ -1,6 +1,4 @@
 *
-!*/
-
 !alacritty/alacritty.yml
 !nvim/init.lua
 !skhd/skhdrc
@@ -8,4 +6,3 @@
 !zsh/.zshenv
 !zsh/.zshrc
 !.gitignore
-!*/.gitignore
