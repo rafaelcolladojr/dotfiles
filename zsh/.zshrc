@@ -1,5 +1,3 @@
-[ -f .customsrc ] && source .customsrc
-
 # Custom aliases
 alias vim='nvim'
 alias ls='ls -alG'
@@ -40,4 +38,3 @@ echo "      _        _        _
 
 # Revisit this
 # compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
-
