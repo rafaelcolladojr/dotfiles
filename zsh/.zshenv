@@ -1,3 +1,6 @@
+[ -f .customenv ]  && source .customenv
+
+
 export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/Documents/development/flutter/bin/:/Library/Java/JavaVirtualMachines/jdk-15.0.2.jdk/Contents/Home/bin:$HOME/development/scripts/:$HOME/.pub-cache/bin/"
 
 export EDITOR="nvim"

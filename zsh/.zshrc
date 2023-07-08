@@ -1,3 +1,5 @@
+[ -f .customsrc ] && source .customsrc
+
 # Custom aliases
 alias vim='nvim'
 alias ls='ls -alG'
