@@ -1,3 +1,9 @@
+export ZSH="$ZDOTDIR/ohmyzsh"
+ZSH_THEME=""
+
+plugins=(git)
+source $ZSH/oh-my-zsh.sh
+
 # Custom aliases
 alias vim='nvim'
 alias ls='ls -alG'
