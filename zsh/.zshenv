@@ -1,8 +1,10 @@
-export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/Documents/development/flutter/bin/:/Library/Java/JavaVirtualMachines/jdk-15.0.2.jdk/Contents/Home/bin:$HOME/development/scripts/:$HOME/.pub-cache/bin/"
+export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/development/flutter/bin/:$HOME/development/scripts/:$HOME/.pub-cache/bin/"
 
 export EDITOR="nvim"
 
 export ZSH_DISABLE_COMPFIX="true"
+
+export DART_SDK="$HOME/development/flutter/bin"
 
 # Clean up the $HOME
 export XDG_DATA_HOME="$HOME"/.local/share
