@@ -190,7 +190,11 @@ require("lazy").setup({
 
   -- FLUTTER
   'dart-lang/dart-vim-plugin',
-  'akinsho/flutter-tools.nvim',
+  {
+    'akinsho/flutter-tools.nvim',
+    lazy = false,
+    config = true,
+  },
 
   -- LUA (PLUGIN) DEV
   'milisims/nvim-luaref',
@@ -287,6 +291,7 @@ vim.keymap.set('n', '<leader>fh', ':lua vim.lsp.buf.hover()<CR>')
 vim.keymap.set('n', '<leader>fe', ':lua vim.diagnostic.open_float()<CR>')
 vim.keymap.set('n', '<F2>', ':lua vim.lsp.buf.rename()<CR>')
 vim.keymap.set('n', '<leader>fa', ':lua vim.lsp.buf.code_action()<CR>')
+vim.keymap.set('n', '<leader>fn', ':lua vim.diagnostic.goto_next()<CR>')
 
 local function toggleDiagnostics()
   if (vim.diagnostic.is_disabled(0)) then
@@ -551,8 +556,8 @@ vim.keymap.set('n', '<leader>ft', ':2ToggleTerm<CR>')
 
 function _G.set_terminal_keymaps()
   local opts = {buffer = 0}
-  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-  vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+  -- vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+  -- vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
   vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
   vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
   vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
