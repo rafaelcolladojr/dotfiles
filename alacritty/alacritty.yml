@@ -29,14 +29,39 @@ window:
 draw_bold_text_with_bright_colors: true
 
 font:
+  # normal:
+  #   family: 'ComicCodeLigatures Nerd Font'
+  #   style: Regular
+  # size: 12.0
+  # use_thin_strokes: false
   normal:
-    family: 'ComicCodeLigaturesNerdFontComplete Nerd Font'
+    family: 'Hack Nerd Font'
     style: Regular
   size: 12.0
   use_thin_strokes: false
+  # normal:
+  #   family: 'Source Code Pro'
+  #   style: Regular
+  # size: 12.0
+  # use_thin_strokes: false
+  # normal:
+  #   family: 'FantasqueSansMono Nerd Font'
+  #   style: Regular
+  # size: 14.0
+  # use_thin_strokes: true
+  # normal:
+  #   family: 'JetBrainsMono Nerd Font'
+  #   style: Regular
+  # size: 12.0
+  # use_thin_strokes: false
+  # normal:
+  #   family: 'OpenDyslexicMono Nerd Font'
+  #   style: Regular
+  # size: 10.0
+  # use_thin_strokes: false
 
 mouse:
-  hide_when_typing: true
+  hide_when_typing: false
 
 key_bindings:
  - { key: Comma, mods: Command, chars: "\x02," }
