@@ -1,8 +1,13 @@
 *
+!alacritty
 !alacritty/alacritty.yml
+!nvim
 !nvim/init.lua
+!skhd
 !skhd/skhdrc
+!yabai
 !yabai/yabairc
+!zsh
 !zsh/.zshenv
 !zsh/.zshrc
 !.gitignore
