@@ -101,8 +101,8 @@ vim.keymap.set('n', '<C-a>', 'gg<S-v>G')
 vim.keymap.set('n', '<leader>os', ':silent !open -a simulator<CR>')
 
 -- Reload current plugin in development
-vim.keymap.set('n', '<leader>rr', ':lua R("dart-boiler")<CR>')
-vim.keymap.set('v', '<leader>bb', ':lua require("dart-boiler").boil(true, true)<CR>')
+vim.keymap.set('n', '<leader>rr', ':lua R("arrowhead")<CR>')
+vim.keymap.set('n', '<leader>bb', ':lua require("arrowhead").swap_notation()<CR>')
 vim.keymap.set('n', '<leader>t', '<Plug>PlenaryTestFile<CR>')
 
 
@@ -142,7 +142,11 @@ require("lazy").setup({
     'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'
   },
   'nvim-treesitter/playground',
-  'windwp/nvim-autopairs',
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    opts = {},
+  },
   'rrethy/nvim-treesitter-endwise',
   'mtdl9/vim-log-highlighting',
   'akinsho/toggleterm.nvim',
@@ -200,7 +204,8 @@ require("lazy").setup({
   'milisims/nvim-luaref',
   'folke/neodev.nvim',
 
-  { dir = '~/Documents/Projects/lua/nvim-plugins/dart-boiler.nvim' },
+  { dir = '~/Documents/Projects/lua/nvim-plugins/arrowhead.nvim' },
+  -- 'rafaelcolladojr/arrowhead.nvim',
   -- 'rafaelcolladojr/dart-boiler.nvim',
 })
 
@@ -212,9 +217,9 @@ require("lazy").setup({
 
 
 -- dart-vim-plugin
-vim.g.dart_style_guide = 2
-vim.g.dart_format_on_save = 1
-vim.g.dart_trailing_comma_indent = true
+-- vim.g.dart_style_guide = 2
+-- vim.g.dart_format_on_save = 1
+-- vim.g.dart_trailing_comma_indent = true
 
 
 -- nvim-autopairs
@@ -230,6 +235,7 @@ lsp.preset({
   name = 'recommended',
   set_lsp_keymaps = false,
 })
+
 
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
@@ -342,6 +348,7 @@ require('flutter-tools').setup {
     run_via_dap = true,
     exception_breakpoints = {},
     register_configurations = function(_)
+      require('dap').configurations.dart = {}
       require("dap.ext.vscode").load_launchjs()
     end,
   },
@@ -387,7 +394,8 @@ require('lualine').setup {
 vim.o.termguicolors = true
 vim.cmd [[ colorscheme catppuccin-frappe ]]
 
-require('catppuccin').setup {
+---@type CatppuccinOptions
+local catp_opts = {
   integrations = {
     treesitter = true,
     telescope = true,
@@ -395,10 +403,7 @@ require('catppuccin').setup {
     harpoon = true,
     mason = true,
     cmp = true,
-    dap = {
-      enabled = true,
-      enable_ui = true,
-    },
+    dap = true,
     native_lsp = {
       enabled = true,
       virtual_text = {
@@ -416,6 +421,8 @@ require('catppuccin').setup {
     },
   },
 }
+
+require('catppuccin').setup(catp_opts)
 
 
 
@@ -445,7 +452,7 @@ telescope.setup {
     sort_lastused = true,
     ignore_current_buffer = true,
     picker = { buffers = { sort_lastused = true } },
-    file_ignore_patterns = { '%.jpg', '%.png', '%.svg', '%.otf', '%.ttf' },
+    file_ignore_patterns = { '%.jpg', '%.png', '%.svg', '%.svg', '%.gif', '%.otf', '%.ttf' },
     defaults = {
       path_display = {
         'smart'
@@ -465,13 +472,9 @@ vim.keymap.set('n', '<Space>he', builtin.help_tags, {})
 
 
 -- treesitter
-require('nvim-treesitter.configs').setup {
-  -- A list of parser names, or "all"
-  ensure_installed = { 'lua', 'vim', 'vimdoc', 'dart', 'java', 'kotlin', 'latex' },
 
-  -- Install parsers synchronously (only applied to 'ensure_installed')
-  sync_install = false,
-  auto_install = true,
+---@type TSModule[][]
+local ts_modules = {
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
@@ -480,14 +483,30 @@ require('nvim-treesitter.configs').setup {
     enable = true,
   },
   playground = {
-    enable = false,
+    enable = true,
   },
   query_linter = {
     enable = false,
-    use_vertual_text = true,
+    use_virtual_text = true,
     lint_events = {"BufWrite", "CursorHold"},
   }
 }
+
+---@type TSConfig
+local ts_config = {
+  -- A list of parser names, or "all"
+  ensure_installed = { 'lua', 'vim', 'vimdoc', 'java', 'kotlin', 'latex' },
+
+  ignore_install = {},
+
+  modules = ts_modules,
+
+  -- Install parsers synchronously (only applied to 'ensure_installed')
+  sync_install = false,
+  auto_install = true,
+}
+
+require('nvim-treesitter.configs').setup(ts_config)
 
 vim.keymap.set('n', '<leader>Tp', ':TSPlaygroundToggle<CR>')
 
@@ -545,11 +564,11 @@ local lazygit = Terminal:new({
   end,
 })
 
-function _lazygit_toggle()
+function Raff_lazygit_toggle()
   lazygit:toggle()
 end
 
-vim.api.nvim_set_keymap("n", "<leader>lg", "<cmd> lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>lg", "<cmd> lua Raff_lazygit_toggle()<CR>", {noremap = true, silent = true})
 
 --Flutter integration
 vim.keymap.set('n', '<leader>ft', ':2ToggleTerm<CR>')
