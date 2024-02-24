@@ -1,4 +1,4 @@
-export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/development/flutter/bin/:$HOME/development/scripts/:$HOME/.pub-cache/bin/"
+export PATH="$PATH:/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt:/usr/local/bin:$HOME/development/flutter/bin/:$HOME/development/scripts/:$HOME/.pub-cache/bin/"
 
 export EDITOR="nvim"
 
