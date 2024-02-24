@@ -4,14 +4,29 @@
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
 vim.opt.backspace = '2'
-vim.opt.showcmd = true
+
+-- editor settings
 vim.opt.laststatus = 2
 vim.opt.autowrite = true
 vim.opt.cursorline = true
 vim.opt.signcolumn = 'yes'
 vim.opt.autoread = true
+vim.opt.colorcolumn = '80'
+
+-- Relative line numbers
+vim.opt.relativenumber = true
+vim.opt.nu = true
+vim.opt.wrap = false
+
+-- command line
+vim.opt.pumblend = 20
+vim.opt.wildmenu = true
+vim.opt.wildmode = 'longest:full'
+vim.opt.wildoptions = 'pum'
+vim.opt.showmode = false
+vim.opt.showcmd = true
+vim.opt.cmdheight = 1;
 
 -- use spaces for tabs and stuff
 vim.opt.expandtab = true
@@ -21,10 +36,6 @@ vim.opt.softtabstop = 2
 vim.opt.shiftround = true
 vim.opt.smartindent = true
 
--- Relative line numbers
-vim.opt.relativenumber = true
-vim.opt.nu = true
-vim.opt.wrap = false
 
 -- Don't highlight search results
 vim.opt.hlsearch = false
@@ -35,7 +46,10 @@ vim.opt.backup = false
 vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir'
 vim.opt.scrolloff = 8
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = ''
+
+
+-- Native clipboard
+vim.opt.clipboard = 'unnamedplus'
 
 -- When opening a window, put it right or below the current one
 vim.opt.splitright = true
@@ -125,13 +139,18 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+
+
 -- plugins
 require("lazy").setup({
-  'gelguy/wilder.nvim',
+  {
+    'gelguy/wilder.nvim',
+    config = function ()
+    end
+  },
   'nvim-lua/plenary.nvim',
 
   -- COLORSCHEMES
-  'shaunsingh/nord.nvim',
   {'catppuccin/nvim', name = 'catppuccin'},
 
   -- IDE
@@ -139,7 +158,12 @@ require("lazy").setup({
   'nvim-tree/nvim-web-devicons',
   'nvim-lualine/lualine.nvim',
   {
-    'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'
+    -- Highlight, edit, and navigate code
+    'nvim-treesitter/nvim-treesitter',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
+    build = ':TSUpdate',
   },
   'nvim-treesitter/playground',
   {
@@ -148,12 +172,14 @@ require("lazy").setup({
     opts = {},
   },
   'rrethy/nvim-treesitter-endwise',
-  'mtdl9/vim-log-highlighting',
   'akinsho/toggleterm.nvim',
-  'akinsho/bufferline.nvim',
   'AndrewRadev/switch.vim',
   'mfussenegger/nvim-dap',
   'rcarriga/nvim-dap-ui',
+  {
+    'j-hui/fidget.nvim',
+    opts = {},
+  },
 
   -- LSP Support
   'neovim/nvim-lspconfig',
@@ -175,37 +201,63 @@ require("lazy").setup({
   -- Formatting
   'onsails/lspkind.nvim',
 
-  -- LSP
-  'VonHeikemen/lsp-zero.nvim',
-
   -- TELESCOPE
-  {'nvim-telescope/telescope.nvim', tag = '0.1.1'},
+  {'nvim-telescope/telescope.nvim', tag = '0.1.5'},
   'nvim-telescope/telescope-ui-select.nvim',
 
   -- TPOPE THE GOD
   'tpope/vim-fugitive',
   'tpope/vim-surround',
   'tpope/vim-commentary',
+  'tpope/vim-sleuth',
 
 
   -- THEPRIMEAGEN
   'theprimeagen/vim-be-good',
   {'theprimeagen/harpoon', 'nvim-lua/plenary.nvim'},
 
+  -- FOLKE
+  'folke/neodev.nvim',
+  {
+    'folke/twilight.nvim',
+    opts = {},
+  },
+  {
+    'folke/zen-mode.nvim',
+    opts = {
+      plugins = {
+        alacritty = {
+          enable = true,
+          font = '20',
+        },
+      },
+    },
+  },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
+  },
+
+
   -- FLUTTER
   'dart-lang/dart-vim-plugin',
   {
     'akinsho/flutter-tools.nvim',
-    lazy = false,
-    config = true,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'stevearc/dressing.nvim',
+    },
   },
 
   -- LUA (PLUGIN) DEV
   'milisims/nvim-luaref',
-  'folke/neodev.nvim',
 
-  { dir = '~/Documents/Projects/lua/nvim-plugins/arrowhead.nvim' },
-  -- 'rafaelcolladojr/arrowhead.nvim',
+  -- { dir = '~/Documents/Projects/lua/nvim-plugins/arrowhead.nvim' },
+  {
+    'rafaelcolladojr/arrowhead.nvim',
+    dependencies = { 'nvim-treesitter' }
+  },
   -- 'rafaelcolladojr/dart-boiler.nvim',
 })
 
@@ -217,9 +269,9 @@ require("lazy").setup({
 
 
 -- dart-vim-plugin
--- vim.g.dart_style_guide = 2
--- vim.g.dart_format_on_save = 1
--- vim.g.dart_trailing_comma_indent = true
+vim.g.dart_style_guide = 2
+vim.g.dart_format_on_save = 1
+vim.g.dart_trailing_comma_indent = true
 
 
 -- nvim-autopairs
@@ -229,17 +281,60 @@ require('nvim-autopairs').setup({
 
 
 -- LSP
-local lsp = require('lsp-zero')
+require('mason').setup()
+require('mason-lspconfig').setup()
 
-lsp.preset({
-  name = 'recommended',
-  set_lsp_keymaps = false,
+local servers = {
+  lua_ls = {
+    Lua = {
+      workspace = {
+        checkThirdParty = false
+      },
+      telemetry = { enable = false },
+    }
+  }
+}
+
+-- Setup neovim lua config
+require('neodev').setup()
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+-- Ensure above servers are installed
+local mason_lspconfig = require('mason-lspconfig')
+
+mason_lspconfig.setup({
+  ensure_installed = vim.tbl_keys(servers),
+})
+
+mason_lspconfig.setup_handlers({
+  function(server_name)
+    require('lspconfig')[server_name].setup({
+      capabilities = capabilities,
+      -- on_attach = on_attach,
+      settings = servers[server_name],
+      filetypes = (servers[server_name] or {}).filetypes,
+    })
+  end,
 })
 
 
 local cmp = require('cmp')
+local luasnip = require('luasnip')
+require('luasnip.loaders.from_vscode').lazy_load()
+luasnip.config.setup()
+
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp_snippet = {
+  expand = function(args)
+    luasnip.lsp_expand(args.body)
+  end,
+}
+local cmp_completion = {
+  completeopt = 'menu,menuone,noinsert',
+}
 local cmp_mappings = {
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm({select = false}),
@@ -247,10 +342,11 @@ local cmp_mappings = {
     ['<S-Tab>'] = cmp.mapping.select_prev_item(cmp_select),
 }
 local cmp_sources = {
-  {name = 'path'},
   {name = 'nvim_lsp'},
   {name = 'luasnip'},
+  {name = 'path'},
 }
+
 local cmp_formatting = {
     fields = { 'abbr', 'menu', 'kind' },
     format = function (_, vim_item)
@@ -265,18 +361,12 @@ cmp_autopairs.on_confirm_done()
 )
 
 cmp.setup({
+  snippet = cmp_snippet,
+  completion = cmp_completion,
   mapping = cmp_mappings,
   sources = cmp_sources,
   formatting = cmp_formatting,
 })
-
-lsp.set_preferences({
-  suggest_lsp_servers = true,
-})
-
-require('neodev').setup()
-
-lsp.setup()
 
 vim.diagnostic.config({
   virtual_text = true,
@@ -338,7 +428,7 @@ require('flutter-tools').setup {
       virtual_text_str = "■",
     },
     settings = {
-      showTodos = true,
+      showTodos = false,
       completeFunctionCalls = true,
       enableSnippets = true,
     },
@@ -473,71 +563,45 @@ vim.keymap.set('n', '<Space>he', builtin.help_tags, {})
 
 -- treesitter
 
----@type TSModule[][]
-local ts_modules = {
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-  indent = {
-    enable = true,
-  },
-  playground = {
-    enable = true,
-  },
-  query_linter = {
-    enable = false,
-    use_virtual_text = true,
-    lint_events = {"BufWrite", "CursorHold"},
+-- Defer Treesitter setup after first render to improve startup time
+vim.defer_fn(function ()
+  ---@type TSModule[][]
+  local ts_modules = {
+    highlight = {
+      enable = true,
+      additional_vim_regex_highlighting = false,
+    },
+    indent = {
+      enable = true,
+    },
+    playground = {
+      enable = true,
+    },
+    query_linter = {
+      enable = false,
+      use_virtual_text = true,
+      lint_events = {"BufWrite", "CursorHold"},
+    }
   }
-}
 
----@type TSConfig
-local ts_config = {
-  -- A list of parser names, or "all"
-  ensure_installed = { 'lua', 'vim', 'vimdoc', 'java', 'kotlin', 'latex' },
+  ---@type TSConfig
+  local ts_config = {
+    -- A list of parser names, or "all"
+    ensure_installed = { 'dart', 'lua', 'vim', 'vimdoc', 'java', 'kotlin', 'latex' },
 
-  ignore_install = {},
+    auto_install = false,
+    sync_install = false,
 
-  modules = ts_modules,
+    ignore_install = {},
 
-  -- Install parsers synchronously (only applied to 'ensure_installed')
-  sync_install = false,
-  auto_install = true,
-}
+    modules = ts_modules,
+  }
 
-require('nvim-treesitter.configs').setup(ts_config)
+  require('nvim-treesitter.configs').setup(ts_config)
+end, 0)
+
 
 vim.keymap.set('n', '<leader>Tp', ':TSPlaygroundToggle<CR>')
-
-
-
--- wilder
-local wilder = require('wilder')
-
-wilder.setup(
-{
-    modes = {':', '/', '?'},
-    next_key = '<Tab>',
-    previous = '<S-Tab>',
-    accept_key = '<Enter>',
-    reject_key = '<Esc>',
-}
-)
-
-wilder.set_option('renderer', wilder.renderer_mux({
-    [':'] = wilder.popupmenu_renderer({
-        left = {
-            ' ',
-            wilder.popupmenu_devicons()
-        },
-        right = {
-            ' ',
-            wilder.popupmenu_scrollbar()
-        },
-    }),
-}))
-
 
 
 -- toggleterm
@@ -589,6 +653,12 @@ vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
 
 
+-- arrowhead
+local arrowhead = require('arrowhead')
+vim.keymap.set('n', '<leader>ah', function() arrowhead.swap_notation() end)
+
+
+
 -- harpoon
 local mark = require('harpoon.mark')
 local ui = require('harpoon.ui')
@@ -601,39 +671,6 @@ vim.keymap.set('n', '<leader>h1', function() ui.nav_file(1) end)
 vim.keymap.set('n', '<leader>h2', function() ui.nav_file(2) end)
 vim.keymap.set('n', '<leader>h3', function() ui.nav_file(3) end)
 vim.keymap.set('n', '<leader>h4', function() ui.nav_file(4) end)
-
-
-
--- bufferline
-local bufferline = require('bufferline')
-
-local color_palette = require('catppuccin.palettes').get_palette 'frappe'
-bufferline.setup {
-  options = {
-    mode = 'tabs',
-    separator_style = 'padded_slant',
-    show_buffer_close_icons = false,
-    show_close_icon = false,
-    always_show_bufferline = false,
-    color_icons = true,
-  },
-    highlights = require('catppuccin.groups.integrations.bufferline').get {
-        styles = { 'italic', 'bold' },
-        custom = {
-            all = {
-                fill = { bg = '#000000' },
-            },
-            color_palette = {
-                background = { fg = color_palette.text },
-            },
-            latte = {
-                background = { fg = '#000000' },
-            },
-        },
-    },
-}
-
-
 
 -- dap
 require('dapui').setup(
