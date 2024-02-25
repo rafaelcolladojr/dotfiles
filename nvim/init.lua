@@ -253,11 +253,11 @@ require("lazy").setup({
   -- LUA (PLUGIN) DEV
   'milisims/nvim-luaref',
 
-  -- { dir = '~/Documents/Projects/lua/nvim-plugins/arrowhead.nvim' },
-  {
-    'rafaelcolladojr/arrowhead.nvim',
-    dependencies = { 'nvim-treesitter' }
-  },
+  { dir = '~/Documents/Projects/lua/nvim-plugins/arrowhead.nvim' },
+  -- {
+  --   'rafaelcolladojr/arrowhead.nvim',
+  --   dependencies = { 'nvim-treesitter' }
+  -- },
   -- 'rafaelcolladojr/dart-boiler.nvim',
 })
 
@@ -565,10 +565,26 @@ vim.keymap.set('n', '<Space>he', builtin.help_tags, {})
 
 -- Defer Treesitter setup after first render to improve startup time
 vim.defer_fn(function ()
-  ---@type TSModule[][]
-  local ts_modules = {
+---@diagnostic disable-next-line: missing-fields
+  require('nvim-treesitter.configs').setup({
+    -- A list of parser names, or "all"
+    ensure_installed = { 'dart', 'lua', 'vim', 'vimdoc', 'java', 'kotlin', 'latex' },
+
+    auto_install = false,
+    sync_install = false,
+
+    ignore_install = {},
+
+    -- modules = ts_modules,
     highlight = {
       enable = true,
+      disable = function(_, buf)
+        local max_filesize = 100 * 1024 -- 100 KB
+        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+            return true
+        end
+      end,
       additional_vim_regex_highlighting = false,
     },
     indent = {
@@ -582,22 +598,7 @@ vim.defer_fn(function ()
       use_virtual_text = true,
       lint_events = {"BufWrite", "CursorHold"},
     }
-  }
-
-  ---@type TSConfig
-  local ts_config = {
-    -- A list of parser names, or "all"
-    ensure_installed = { 'dart', 'lua', 'vim', 'vimdoc', 'java', 'kotlin', 'latex' },
-
-    auto_install = false,
-    sync_install = false,
-
-    ignore_install = {},
-
-    modules = ts_modules,
-  }
-
-  require('nvim-treesitter.configs').setup(ts_config)
+  })
 end, 0)
 
 
