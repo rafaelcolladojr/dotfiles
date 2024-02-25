@@ -234,9 +234,16 @@ require("lazy").setup({
     },
   },
   {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    'folke/todo-comments.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
     opts = {},
+  },
+  {
+    'folke/trouble.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      severity = vim.diagnostic.severity.ERROR,
+    },
   },
 
 
@@ -385,6 +392,7 @@ vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>')
 
 vim.keymap.set('n', '<leader>fh', ':lua vim.lsp.buf.hover()<CR>')
 vim.keymap.set('n', '<leader>fe', ':lua vim.diagnostic.open_float()<CR>')
+vim.keymap.set('n', '<leader>fE', ':Trouble<CR>')
 vim.keymap.set('n', '<F2>', ':lua vim.lsp.buf.rename()<CR>')
 vim.keymap.set('n', '<leader>fa', ':lua vim.lsp.buf.code_action()<CR>')
 vim.keymap.set('n', '<leader>fn', ':lua vim.diagnostic.goto_next()<CR>')
