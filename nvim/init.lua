@@ -115,8 +115,7 @@ vim.keymap.set('n', '<C-a>', 'gg<S-v>G')
 vim.keymap.set('n', '<leader>os', ':silent !open -a simulator<CR>')
 
 -- Reload current plugin in development
-vim.keymap.set('n', '<leader>rr', ':lua R("arrowhead")<CR>')
-vim.keymap.set('n', '<leader>bb', ':lua require("arrowhead").swap_notation()<CR>')
+-- vim.keymap.set('n', '<leader>bb', ':lua require("arrowhead").swap_notation(false)<CR>')
 vim.keymap.set('n', '<leader>t', '<Plug>PlenaryTestFile<CR>')
 
 
@@ -148,10 +147,15 @@ require("lazy").setup({
     config = function ()
     end
   },
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    opts = {},
+  },
   'nvim-lua/plenary.nvim',
 
   -- COLORSCHEMES
-  {'catppuccin/nvim', name = 'catppuccin'},
+  {'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
 
   -- IDE
   'nvim-tree/nvim-tree.lua',
@@ -166,11 +170,6 @@ require("lazy").setup({
     build = ':TSUpdate',
   },
   'nvim-treesitter/playground',
-  {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
-    opts = {},
-  },
   'rrethy/nvim-treesitter-endwise',
   'akinsho/toggleterm.nvim',
   'AndrewRadev/switch.vim',
@@ -214,7 +213,11 @@ require("lazy").setup({
 
   -- THEPRIMEAGEN
   'theprimeagen/vim-be-good',
-  {'theprimeagen/harpoon', 'nvim-lua/plenary.nvim'},
+  {
+    'theprimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
 
   -- FOLKE
   'folke/neodev.nvim',
@@ -256,16 +259,6 @@ require("lazy").setup({
       'stevearc/dressing.nvim',
     },
   },
-
-  -- LUA (PLUGIN) DEV
-  'milisims/nvim-luaref',
-
-  { dir = '~/Documents/Projects/lua/nvim-plugins/arrowhead.nvim' },
-  -- {
-  --   'rafaelcolladojr/arrowhead.nvim',
-  --   dependencies = { 'nvim-treesitter' }
-  -- },
-  -- 'rafaelcolladojr/dart-boiler.nvim',
 })
 
 
@@ -281,10 +274,18 @@ vim.g.dart_format_on_save = 1
 vim.g.dart_trailing_comma_indent = true
 
 
+
+
+
+
 -- nvim-autopairs
 require('nvim-autopairs').setup({
   disable_filetype = { 'TelescopePrompt', 'vim' }
 })
+
+
+
+
 
 
 -- LSP
@@ -408,6 +409,10 @@ end
 vim.keymap.set('n', '<leader>dt', function() toggleDiagnostics() end)
 
 
+
+
+
+
 -- flutter-tools
 require('flutter-tools').setup {
   decorations = {
@@ -461,6 +466,9 @@ vim.keymap.set('n', '<leader>fq', ':FlutterQuit<CR>')
 
 
 
+
+
+
 -- lualine
 local function flutter_app_version()
   return vim.g.flutter_tools_decorations.app_version
@@ -488,12 +496,18 @@ require('lualine').setup {
 
 
 
--- catppuccin
-vim.o.termguicolors = true
-vim.cmd [[ colorscheme catppuccin-frappe ]]
 
+
+
+-- catppuccin
 ---@type CatppuccinOptions
 local catp_opts = {
+  flavour = 'mocha',
+  background = {
+    light = 'latte',
+    dark = 'mocha',
+  },
+  transparent_background = false,
   integrations = {
     treesitter = true,
     telescope = true,
@@ -521,6 +535,11 @@ local catp_opts = {
 }
 
 require('catppuccin').setup(catp_opts)
+vim.cmd.colorscheme 'catppuccin'
+vim.o.termguicolors = true
+
+
+
 
 
 
@@ -539,6 +558,9 @@ require('nvim-tree').setup {
 }
 
 vim.keymap.set('n', '<c-n>', ':NvimTreeFindFileToggle<CR>')
+
+
+
 
 
 
@@ -569,8 +591,10 @@ vim.keymap.set('n', '<Space>he', builtin.help_tags, {})
 
 
 
--- treesitter
 
+
+
+-- treesitter
 -- Defer Treesitter setup after first render to improve startup time
 vim.defer_fn(function ()
 ---@diagnostic disable-next-line: missing-fields
@@ -611,6 +635,10 @@ end, 0)
 
 
 vim.keymap.set('n', '<leader>Tp', ':TSPlaygroundToggle<CR>')
+
+
+
+
 
 
 -- toggleterm
@@ -662,93 +690,28 @@ vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
 
 
--- arrowhead
-local arrowhead = require('arrowhead')
-vim.keymap.set('n', '<leader>ah', function() arrowhead.swap_notation() end)
 
 
 
 -- harpoon
-local mark = require('harpoon.mark')
-local ui = require('harpoon.ui')
+local harpoon = require('harpoon')
 
-vim.keymap.set('n', '<leader>ha', mark.add_file)
-vim.keymap.set('n', '<leader>hh', ui.toggle_quick_menu)
+vim.keymap.set('n', '<leader>ha', function() harpoon:list():append() end)
+vim.keymap.set('n', '<leader>hh', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
 -- Navigation
-vim.keymap.set('n', '<leader>h1', function() ui.nav_file(1) end)
-vim.keymap.set('n', '<leader>h2', function() ui.nav_file(2) end)
-vim.keymap.set('n', '<leader>h3', function() ui.nav_file(3) end)
-vim.keymap.set('n', '<leader>h4', function() ui.nav_file(4) end)
+vim.keymap.set('n', '<leader>h1', function() harpoon:list():select(1) end)
+vim.keymap.set('n', '<leader>h2', function() harpoon:list():select(2) end)
+vim.keymap.set('n', '<leader>h3', function() harpoon:list():select(3) end)
+vim.keymap.set('n', '<leader>h4', function() harpoon:list():select(4) end)
+
+
+
+
+
 
 -- dap
-require('dapui').setup(
-
-  {
-    controls = {
-      element = "repl",
-      enabled = true,
-      icons = {
-        disconnect = "",
-        pause = "",
-        play = "",
-        run_last = "",
-        step_back = "",
-        step_into = "",
-        step_out = "",
-        step_over = "",
-        terminate = ""
-      }
-    },
-    element_mappings = {},
-    expand_lines = true,
-    floating = {
-      border = "single",
-      mappings = {
-        close = { "q", "<Esc>" }
-      }
-    },
-    force_buffers = true,
-    icons = {
-      collapsed = "",
-      current_frame = "",
-      expanded = ""
-    },
-    layouts = { {
-        elements = { {
-            id = "scopes",
-            size = 0.5
-          }, {
-            id = "breakpoints",
-            size = 0.25
-          }, {
-            id = "watches",
-            size = 0.25
-          } },
-        position = "left",
-        size = 40
-      }, {
-        elements = { {
-            id = "repl",
-            size = 1
-          } },
-        position = "bottom",
-        size = 10
-      } },
-    mappings = {
-      edit = "e",
-      expand = { "<CR>", "<2-LeftMouse>" },
-      open = "o",
-      remove = "d",
-      repl = "r",
-      toggle = "t"
-    },
-    render = {
-      indent = 1,
-      max_value_lines = 100
-    }
-  }
-)
+require('dapui').setup()
 
 local dap, dapui = require("dap"), require("dapui")
 dap.listeners.after.event_initialized["dapui_config"] = function()
