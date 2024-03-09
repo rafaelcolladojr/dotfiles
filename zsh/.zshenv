@@ -1,10 +1,8 @@
-export PATH="$PATH:/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt:/usr/local/bin:$HOME/development/flutter/bin/:$HOME/development/scripts/:$HOME/.pub-cache/bin/"
-
 export EDITOR="nvim"
 
 export ZSH_DISABLE_COMPFIX="true"
 
-export DART_SDK="$HOME/development/flutter/bin"
+export DART_SDK="$HOME/Documents/development/flutter/bin"
 
 # Clean up the $HOME
 export XDG_DATA_HOME="$HOME"/.local/share
@@ -20,3 +18,7 @@ export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export TERMINFO="$XDG_DATA_HOME"/terminfo
 export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo
+
+
+
+export PATH="$PATH:/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt:/usr/local/bin:$DART_SDK:$HOME/development/scripts/:$HOME/.pub-cache/bin/"
