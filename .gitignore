@@ -5,6 +5,7 @@
 !nvim/init.lua
 !skhd
 !skhd/skhdrc
+!lazygit
 !lazygit/config.yml
 !yabai
 !yabai/yabairc
