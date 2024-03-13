@@ -14,12 +14,21 @@ alias nvimedit='cd ~/.config/nvim; vim'
 alias flutterprojects='cd ~/Documents/Projects/flutter/'
 alias luaprojects='cd ~/Documents/Projects/lua/'
 
+# Multi-user brew support
+unalias brew 2>/dev/null
+brewser=$(stat -f "%Su" $(which brew))
+alias brew='sudo -Hu '$brewser' brew'
+
+
 # Config aliases
 alias zshconfig='nvim ~/.config/zsh/.zshrc'
 alias envconfig='nvim ~/.config/zsh/.zshenv'
 alias yabaiconfig='nvim ~/.config/yabai/yabairc'
 alias skhdconfig='nvim ~/.config/skhd/skhdrc'
 alias alacrittyconfig='nvim ~/.config/alacritty/alacritty.yml'
+
+
+
 
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
