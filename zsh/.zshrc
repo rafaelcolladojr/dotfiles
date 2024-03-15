@@ -7,10 +7,7 @@ source $ZSH/oh-my-zsh.sh
 # Custom aliases
 alias vim='nvim'
 alias ls='ls -alG'
-alias brew='/opt/homebrew/bin/brew'
 alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
-alias python=python3
-alias nvimedit='cd ~/.config/nvim; vim'
 alias flutterprojects='cd ~/Documents/Projects/flutter/'
 alias luaprojects='cd ~/Documents/Projects/lua/'
 
