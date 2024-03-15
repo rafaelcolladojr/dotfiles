@@ -1,6 +1,6 @@
 *
 !alacritty
-!alacritty/alacritty.yml
+!alacritty/alacritty.toml
 !nvim
 !nvim/init.lua
 !skhd
