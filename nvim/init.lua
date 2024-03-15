@@ -179,6 +179,14 @@ require("lazy").setup({
     'j-hui/fidget.nvim',
     opts = {},
   },
+  {
+    'numToStr/Comment.nvim',
+    opts = {},
+    lazy = false,
+  },
+
+  -- tmux support
+  'christoomey/vim-tmux-navigator',
 
   -- LSP Support
   'neovim/nvim-lspconfig',
@@ -250,7 +258,7 @@ require("lazy").setup({
   },
 
 
-  -- FLUTTER
+  -- Flutter
   'dart-lang/dart-vim-plugin',
   {
     'akinsho/flutter-tools.nvim',
@@ -259,6 +267,9 @@ require("lazy").setup({
       'stevearc/dressing.nvim',
     },
   },
+
+
+
 })
 
 
@@ -300,7 +311,7 @@ local servers = {
       },
       telemetry = { enable = false },
     }
-  }
+  },
 }
 
 -- Setup neovim lua config
@@ -490,7 +501,7 @@ require('lualine').setup {
       }
     },
     lualine_c = {'branch', 'diff', 'diagnostics'},
-    lualine_x = { flutter_app_version,  },
+    lualine_x = { flutter_app_version },
   },
 }
 
@@ -509,13 +520,12 @@ local catp_opts = {
   },
   transparent_background = false,
   integrations = {
-    treesitter = true,
-    telescope = true,
-    nvimtree = true,
-    harpoon = true,
-    mason = true,
     cmp = true,
     dap = true,
+    dap_ui = true,
+    fidget = true,
+    harpoon = true,
+    mason = true,
     native_lsp = {
       enabled = true,
       virtual_text = {
@@ -530,7 +540,15 @@ local catp_opts = {
         warnings = { "underline" },
         information = { "underline" },
       },
+      inlay_hints = {
+        background = true,
+      }
     },
+    nvimtree = true,
+    telescope = {
+      enabled = true,
+    },
+    treesitter = true,
   },
 }
 
@@ -738,3 +756,10 @@ vim.keymap.set('n', '<leader>do', ':lua require("dap").step_over()<CR>')
 vim.keymap.set('n', '<leader>di', ':lua require("dap").step_ito()<CR>')
 
 vim.keymap.set('v', '<C-k>', 'lua require("dapui").eval()<CR>')
+
+
+
+
+
+-- comments
+require('Comment').setup()
