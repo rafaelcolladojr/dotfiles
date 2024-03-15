@@ -193,5 +193,6 @@ alt - q : yabai -m window --close
 
 # Open applications
 alt - return : open -na /Applications/Alacritty.app
+alt - n : open -na /Applications/Alacritty.app --args --working-directory ~ --command nvim .config
+# alt - \ : alacritty --working-directory "~/.confg" --command "nvim"
 alt - b : open -na /Applications/Google\ Chrome.app
-
