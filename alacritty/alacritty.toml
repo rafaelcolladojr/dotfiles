@@ -9,11 +9,11 @@ TERM = "xterm-256color"
 
 [font]
 size = 12.0
-offset = { x = 0, y = -1 }
+offset = { x = 0, y = 0 }
 
 [font.normal]
 family = "MonoLisa"
-style = "Book"
+style = "Regular"
 
 [[keyboard.bindings]]
 chars = "\u0002,"
