@@ -1,7 +1,7 @@
 export ZSH="$ZDOTDIR/ohmyzsh"
 ZSH_THEME=""
 
-plugins=(git)
+plugins=(git zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 # Custom aliases
@@ -23,8 +23,6 @@ alias envconfig='nvim ~/.config/zsh/.zshenv'
 alias yabaiconfig='nvim ~/.config/yabai/yabairc'
 alias skhdconfig='nvim ~/.config/skhd/skhdrc'
 alias alacrittyconfig='nvim ~/.config/alacritty/alacritty.yml'
-
-
 
 
 fpath+=${ZDOTDIR:-~}/.zsh_functions

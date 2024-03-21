@@ -518,7 +518,7 @@ local catp_opts = {
     light = 'latte',
     dark = 'mocha',
   },
-  transparent_background = false,
+  transparent_background = true,
   integrations = {
     cmp = true,
     dap = true,
