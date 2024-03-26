@@ -352,7 +352,7 @@ local cmp_snippet = {
   end,
 }
 local cmp_completion = {
-  completeopt = 'menu,menuone,noinsert',
+  completeopt = 'menu,menuone,noselect',
 }
 local cmp_mappings = {
     ['<C-Space>'] = cmp.mapping.complete(),
