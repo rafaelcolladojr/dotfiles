@@ -192,6 +192,6 @@ alt - e : yabai -m window --toggle split
 alt - q : yabai -m window --close
 
 # Open applications
-# alt - return : open -na /Applications/Alacritty.app
-alt - return : open -na /Applications/iTerm.app
+alt - return : open -na /Applications/Alacritty.app
+# alt - return : open -na /Applications/iTerm.app
 alt - b : open -na /Applications/Google\ Chrome.app
