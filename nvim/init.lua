@@ -36,7 +36,6 @@ vim.opt.softtabstop = 2
 vim.opt.shiftround = true
 vim.opt.smartindent = true
 
-
 -- Don't highlight search results
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
@@ -267,6 +266,7 @@ require("lazy").setup({
       'stevearc/dressing.nvim',
     },
   },
+  'wa11breaker/flutter-bloc.nvim',
 
 
 

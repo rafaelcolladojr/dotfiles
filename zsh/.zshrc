@@ -1,8 +1,11 @@
 export ZSH="$ZDOTDIR/ohmyzsh"
-ZSH_THEME=""
+ZSH_THEME="typewritten"
 
 plugins=(git zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
+
+# User specific
+source ~/.config/zsh/custom/zshrc
 
 # Custom aliases
 alias vim='nvim'
@@ -27,18 +30,6 @@ alias alacrittyconfig='nvim ~/.config/alacritty/alacritty.yml'
 
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
-# Typewritten zsh theme
-export TYPEWRITTEN_PROMPT_LAYOUT="singleline"
-export TYPEWRITTEN_SYMBOL="❯"
-export TYPEWRITTEN_ARROW_SYMBOL="->"
-export TYPEWRITTEN_RELATIVE_PATH="adaptive"
-export TYPEWRITTEN_CURSOR="underscore"
-export TYPEWRITTEN_RIGHT_PROMPT_PREFIX=""
-
-fpath+=$HOME/.zsh/typewritten
-autoload -U promptinit; promptinit
-prompt typewritten
-
 echo "      _        _        _
     >(.)__   =(.)__   =(.)__
      (___/    (___/    (___/   
@@ -48,3 +39,9 @@ echo "      _        _        _
 
 # Revisit this
 # compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/rafaelqvin/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/rafaelqvin/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/rafaelqvin/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/rafaelqvin/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

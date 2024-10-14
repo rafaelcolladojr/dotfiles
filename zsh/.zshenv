@@ -2,6 +2,9 @@ export EDITOR="nvim"
 
 export ZSH_DISABLE_COMPFIX="true"
 
+# User specific
+source ~/.config/zsh/custom/zshrc
+
 export DART_SDK="$HOME/Documents/development/flutter/bin"
 
 # Clean up the $HOME
