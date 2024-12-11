@@ -3,14 +3,12 @@
 !alacritty/alacritty.toml
 !nvim
 !nvim/*
-!skhd
-!skhd/skhdrc
+!aerospace
+!aerospace/aerospace.toml
 !tmux
 !tmux/tmux.conf
 !lazygit
 !lazygit/config.yml
-!yabai
-!yabai/yabairc
 !zsh
 !zsh/.zshenv
 !zsh/.zshrc
