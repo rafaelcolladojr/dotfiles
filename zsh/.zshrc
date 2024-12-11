@@ -23,9 +23,8 @@ alias brew='sudo -Hu '$brewser' brew'
 # Config aliases
 alias zshconfig='nvim ~/.config/zsh/.zshrc'
 alias envconfig='nvim ~/.config/zsh/.zshenv'
-alias yabaiconfig='nvim ~/.config/yabai/yabairc'
-alias skhdconfig='nvim ~/.config/skhd/skhdrc'
-alias alacrittyconfig='nvim ~/.config/alacritty/alacritty.yml'
+alias aeroconfig='nvim ~/.config/aerospace/aerospace.toml'
+alias vimconfig='nvim ~/.config/nvim/init.lua'
 
 
 fpath+=${ZDOTDIR:-~}/.zsh_functions

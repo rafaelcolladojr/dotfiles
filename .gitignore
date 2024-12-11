@@ -2,7 +2,7 @@
 !alacritty
 !alacritty/alacritty.toml
 !nvim
-!nvim/init.lua
+!nvim/*
 !skhd
 !skhd/skhdrc
 !tmux
