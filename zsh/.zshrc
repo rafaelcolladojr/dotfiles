@@ -12,6 +12,8 @@ alias vim='nvim'
 alias ls='ls -alG'
 alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
 alias flutterprojects='cd ~/Documents/Projects/flutter/'
+alias gleamprojects='cd ~/Documents/Projects/gleam/'
+alias dartprojects='cd ~/Documents/Projects/dart/'
 alias luaprojects='cd ~/Documents/Projects/lua/'
 
 # Multi-user brew support
