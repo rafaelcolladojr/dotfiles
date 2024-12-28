@@ -5,7 +5,7 @@
 # 'start-at-login' needs to be 'true' for 'after-login-command' to work
 # Available commands: https://nikitabobko.github.io/AeroSpace/commands
 after-login-command = [
-'exec-and-forget open -n /Applications/Alacritty.app',
+'exec-and-forget open -n /Applications/Ghostty.app',
 'exec-and-forget open -n /Applications/Google Chrome.app/',
 'exec-and-forget open -n /Applications/Sunsama.app',
 'exec-and-forget open -n /Applications/Spotify.app/'
@@ -197,13 +197,13 @@ alt-shift-semicolon = 'mode service'
 alt-q = 'close'
 
 # Applications launch
-alt-enter = 'exec-and-forget open -na /Applications/Alacritty.app/'
+alt-enter = 'exec-and-forget open -na /Applications/Ghostty.app/'
 alt-b = 'exec-and-forget open -na /Applications/Google\ Chrome.app/' 
 
 
 # Assign programs to workspaces
 [[on-window-detected]]
-if.app-id = 'org.alacritty'
+if.app-id = 'org.ghostty'
 if.during-aerospace-startup = true
 run = ['move-node-to-workspace 1']
 

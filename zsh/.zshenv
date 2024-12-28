@@ -20,6 +20,5 @@ export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export TERMINFO="$XDG_DATA_HOME"/terminfo
-export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo
-
+export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo:/Applications/Ghostty.app/Contents/Resources/terminfo
 export PATH="$PATH:/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt:/usr/local/bin:$DART_SDK:$HOME/development/scripts/:$HOME/.pub-cache/bin/"
