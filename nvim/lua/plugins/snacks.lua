@@ -8,7 +8,7 @@ return {
     lazy = false,
     ---@type snacks.Config
     opts = {
-      animate = { enabled = true },
+      animate = {},
       dashboard = {
         enabled = true,
         sections = {
@@ -19,15 +19,14 @@ return {
           { section = "startup" },
         },
       },
-      dim = { enabled = true },
-      lazygit = { enabled = true },
-      notifier = { enabled = true },
-      notify = { enabled = true },
-      terminal = {
-        enabled = true,
-      },
-      indent = { enabled = true },
-      win = { enabled = true },
+      dim = {},
+      input = {},
+      lazygit = {},
+      notifier = {},
+      notify = {},
+      ---@type snacks.terminal.Config
+      indent = {},
+      win = {},
       zen = {
         enabled = true,
         dim = true,
@@ -80,9 +79,9 @@ return {
         end,
       })
 
+
       -- KEYBINDINGS
       vim.keymap.set('n', '<leader>lg', ':lua Snacks.lazygit.open()<CR>')
-      vim.keymap.set('n', '<leader>ft', ':lua Snacks.terminal()<CR>')
       vim.keymap.set('n', '<leader>z', ':lua Snacks.zen()<CR>')
     end
   }

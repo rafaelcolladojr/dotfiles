@@ -9,6 +9,7 @@ return {
   },
   {
     'akinsho/flutter-tools.nvim',
+    lazy = false,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'stevearc/dressing.nvim',
@@ -21,9 +22,9 @@ return {
           device = true,
         },
       },
-      widget_guides = {
-        enabled = false,
-      },
+      -- widget_guides = {
+      --   enabled = false,
+      -- },
       closing_tags = {
         highlight = 'Comment',
         prefix = '//',
@@ -32,20 +33,20 @@ return {
       dev_log = {
         enabled = false,
       },
-      lsp = {
-        color = {
-          enabled = true,
-          background = true,
-          foreground = false,
-          virtual_text = true,
-          virtual_text_str = "■",
-        },
-        settings = {
-          showTodos = false,
-          completeFunctionCalls = true,
-          enableSnippets = true,
-        },
-      },
+      -- lsp = {
+      --   color = {
+      --     enabled = true,
+      --     background = true,
+      --     foreground = false,
+      --     virtual_text = true,
+      --     virtual_text_str = "■",
+      --   },
+      --   settings = {
+      --     showTodos = false,
+      --     completeFunctionCalls = true,
+      --     enableSnippets = true,
+      --   },
+      -- },
       debugger = {
         enabled = true,
         run_via_dap = true,

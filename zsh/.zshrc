@@ -7,6 +7,11 @@ source $ZSH/oh-my-zsh.sh
 # User specific
 source ~/.config/zsh/custom/zshrc
 
+# Enable chruby
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+chruby ruby-3.4.1
+
 # Custom aliases
 alias vim='nvim'
 alias ls='ls -alG'

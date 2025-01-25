@@ -14,8 +14,12 @@ return {
     },
     config = function()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
       require('lspconfig').dartls.setup { capabilities = capabilities }
       require('lspconfig').gleam.setup { capabilities = capabilities }
+      require 'lspconfig'.cssls.setup { capabilities = capabilities }
+      require 'lspconfig'.html.setup { capabilities = capabilities }
+      require 'lspconfig'.remark_ls.setup { capabilities = capabilities }
       require('lspconfig').lua_ls.setup {
         capabilities = capabilities,
         Lua = {
@@ -59,6 +63,11 @@ return {
           telemetry = { enable = false },
         }
       }
+
+      vim.diagnostic.config({
+        update_in_insert = true,
+        float = false,
+      })
 
 
       vim.api.nvim_create_autocmd('LspAttach', {
