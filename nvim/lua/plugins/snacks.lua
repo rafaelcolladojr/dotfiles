@@ -4,15 +4,16 @@ return {
     dependencies = {
       'nvim-tree/nvim-tree.lua',
     },
+    enabled = true,
     priority = 1000,
     lazy = false,
     ---@type snacks.Config
     opts = {
       animate = {},
       dashboard = {
-        enabled = true,
+        enabled = false,
         sections = {
-          { section = "header" },
+          -- { section = "header" },
           { section = "keys", gap = 1, padding = 1 },
           { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 2 },
           { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 2 },
