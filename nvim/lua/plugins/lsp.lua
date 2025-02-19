@@ -15,7 +15,7 @@ return {
     config = function()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
       capabilities.textDocument.completion.completionItem.snippetSupport = true
-      require('lspconfig').dartls.setup { capabilities = capabilities }
+      -- require('lspconfig').dartls.setup { capabilities = capabilities }
       require('lspconfig').gleam.setup { capabilities = capabilities }
       require 'lspconfig'.cssls.setup { capabilities = capabilities }
       require 'lspconfig'.html.setup { capabilities = capabilities }

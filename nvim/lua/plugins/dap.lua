@@ -97,6 +97,7 @@ return {
       vim.keymap.set('n', '<leader>dd', ':lua require("dap").continue()<CR>')
       vim.keymap.set('n', '<leader>do', ':lua require("dap").step_over()<CR>')
       vim.keymap.set('n', '<leader>di', ':lua require("dap").step_ito()<CR>')
+      vim.keymap.set('n', '<leader>dh', ':lua require("dap").toggle()<CR>')
 
       vim.keymap.set('v', '<C-k>', 'lua require("dapui").eval()<CR>')
     end

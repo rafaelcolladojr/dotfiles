@@ -1,6 +1,8 @@
 return {
   {
     'dart-lang/dart-vim-plugin',
+    lazy = true,
+    ft = "dart",
     init = function()
       vim.g.dart_style_guide = 2
       vim.g.dart_format_on_save = 1
@@ -9,7 +11,8 @@ return {
   },
   {
     'akinsho/flutter-tools.nvim',
-    lazy = false,
+    lazy = true,
+    ft = "dart",
     dependencies = {
       'nvim-lua/plenary.nvim',
       'stevearc/dressing.nvim',
@@ -33,22 +36,22 @@ return {
       dev_log = {
         enabled = false,
       },
-      -- lsp = {
-      --   color = {
-      --     enabled = true,
-      --     background = true,
-      --     foreground = false,
-      --     virtual_text = true,
-      --     virtual_text_str = "■",
-      --   },
-      --   settings = {
-      --     showTodos = false,
-      --     completeFunctionCalls = true,
-      --     enableSnippets = true,
-      --   },
-      -- },
+      lsp = {
+        color = {
+          enabled = true,
+          background = false,
+          foreground = false,
+          virtual_text = true,
+          virtual_text_str = "■",
+        },
+        settings = {
+          showTodos = false,
+          completeFunctionCalls = true,
+          enableSnippets = true,
+        },
+      },
       debugger = {
-        enabled = true,
+        enabled = false,
         run_via_dap = true,
         exception_breakpoints = {},
         register_configurations = function(_)
@@ -66,5 +69,17 @@ return {
       vim.keymap.set('n', '<leader>fq', ':FlutterQuit<CR>')
     end
   },
-  { 'wa11breaker/flutter-bloc.nvim' },
+  {
+    'wa11breaker/flutter-bloc.nvim',
+    dependencies = {
+      "nvimtools/none-ls.nvim",
+    },
+    lazy = true,
+    ft = "dart",
+    opts = {
+      bloc_type = 'default',
+      use_sealed_classes = false,
+      enable_code_actions = true,
+    }
+  }
 }
