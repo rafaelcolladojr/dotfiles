@@ -51,7 +51,7 @@ return {
         },
       },
       debugger = {
-        enabled = false,
+        enabled = true,
         run_via_dap = true,
         exception_breakpoints = {},
         register_configurations = function(_)
@@ -67,6 +67,34 @@ return {
       vim.keymap.set('n', '<leader>fS', ':FlutterSplit<CR>')
       vim.keymap.set('n', '<leader>ff', ':FlutterRun<CR>')
       vim.keymap.set('n', '<leader>fq', ':FlutterQuit<CR>')
+
+      local
+      function reload_dartls_if_inactive()
+        local dartls_client
+        for _, client in ipairs(vim.lsp.get_clients()) do
+          if client.name == "dartls" then
+            dartls_client = client
+            break
+          end
+        end
+
+        vim.defer_fn(function()
+          if dartls_client and not dartls_client.is_stopped() then
+            return
+          end
+
+          if dartls_client and dartls_client.stop then
+            dartls_client.stop()
+          end
+
+          require("flutter-tools.lsp").attach()
+        end, 2000)
+      end
+
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        pattern = "*.dart",
+        callback = reload_dartls_if_inactive,
+      })
     end
   },
   {
