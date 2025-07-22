@@ -2,6 +2,7 @@ background-opacity = 0.95
 background-blur-radius = 20
 confirm-close-surface = false
 cursor-style = block
+font-family = "JetBrainsMono NF Regular"
 macos-titlebar-style = hidden
 quit-after-last-window-closed = true
 theme = catppuccin-mocha

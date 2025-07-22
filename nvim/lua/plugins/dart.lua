@@ -66,7 +66,8 @@ return {
       vim.keymap.set('n', '<leader>fs', ':FlutterVSplit<CR>')
       vim.keymap.set('n', '<leader>fS', ':FlutterSplit<CR>')
       vim.keymap.set('n', '<leader>ff', ':FlutterRun<CR>')
-      vim.keymap.set('n', '<leader>fq', ':FlutterQuit<CR>')
+      vim.keymap.set('n', '<leader>fv', ':FlutterVisualDebug<CR>')
+      vim.keymap.set('n', '<leader>fq', ':FlutterQuit<CR>:lua require("dapui").close()<CR>')
 
       local
       function reload_dartls_if_inactive()

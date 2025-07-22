@@ -3,7 +3,7 @@ export EDITOR="nvim"
 export ZSH_DISABLE_COMPFIX="true"
 
 # User specific
-source ~/.config/zsh/custom/zshrc
+source ~/.config/zsh/custom/zshenv
 
 export DART_SDK="$HOME/Documents/development/flutter/bin"
 
@@ -22,4 +22,7 @@ export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export TERMINFO="$XDG_DATA_HOME"/terminfo
 export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo:/Applications/Ghostty.app/Contents/Resources/terminfo
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt:$PATH:$DART_SDK:$HOME/development/scripts/:$HOME/.pub-cache/bin/"
+
+export CUSTOM_SCRIPTS_DIR="$HOME/Documents/scripts"
+
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt:$PATH:$DART_SDK:$HOME/development/scripts/:$HOME/.pub-cache/bin/:$CUSTOM_SCRIPTS_DIR"
