@@ -8,8 +8,8 @@ after-login-command = [
 'exec-and-forget open -n /Applications/Ghostty.app',
 'exec-and-forget open -n /Applications/Google Chrome.app/',
 'exec-and-forget open -n /Applications/Sunsama.app',
-# 'exec-and-forget open -n /Applications/Spotify.app/'
-'exec-and-forget open -n /Applications/Google Chrome.app/ --args --new-window "https://music.youtube.com/"',
+'exec-and-forget open -n /Applications/Spotify.app/'
+# 'exec-and-forget open -n /Applications/Google Chrome.app/ --args --new-window "https://music.youtube.com/"',
 ]
 
 # You can use it to add commands that run after AeroSpace startup.
@@ -200,7 +200,7 @@ alt-q = 'close'
 # Applications launch
 alt-enter = 'exec-and-forget open -na /Applications/Ghostty.app/'
 alt-b = 'exec-and-forget open -na /Applications/Google\ Chrome.app/' 
-alt-m = 'exec-and-forget open -na /Applications/Google\ Chrome.app/ --args --app="https://music.youtube.com/" --hide-scrollbars'
+alt-m = 'exec-and-forget open -n /Applications/Spotify.app/'
 
 
 # Assign programs to workspaces
@@ -210,25 +210,19 @@ if.during-aerospace-startup = true
 run = ['move-node-to-workspace 1']
 
 [[on-window-detected]]
+if.app-id = 'com.microsoft.teams2'
+if.during-aerospace-startup = true
+run = ['move-node-to-workspace 2']
+
+[[on-window-detected]]
 if.app-id = 'com.google.Chrome'
 if.during-aerospace-startup = true
 run = ['move-node-to-workspace 3']
 
 [[on-window-detected]]
-if.app-id = 'com.sunsama.native-app'
-if.during-aerospace-startup = false
-run = ['move-node-to-workspace 5']
-
-[[on-window-detected]]
-if.app-id = 'com.google.Chrome'
-if.window-title-regex-substring = 'YouTube Music'
-if.during-aerospace-startup = false
-run = ['move-node-to-workspace 9']
-
-[[on-window-detected]]
-if.app-id = 'com.spotify.client'
-if.during-aerospace-startup = false
-run = ['move-node-to-workspace 9']
+if.app-id = 'com.microsoft.Outlook'
+if.during-aerospace-startup = true
+run = ['move-node-to-workspace 4']
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes

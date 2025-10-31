@@ -53,3 +53,6 @@ vim.opt.splitbelow = true
 
 -- Enable mouse support
 vim.opt.mouse = 'a'
+
+-- Enable syntax-based folding
+vim.opt.foldmethod = 'manual'

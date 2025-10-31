@@ -1,6 +1,7 @@
 return {
   {
     'dart-lang/dart-vim-plugin',
+    enabled = false,
     lazy = true,
     ft = "dart",
     init = function()
@@ -38,7 +39,7 @@ return {
       },
       lsp = {
         color = {
-          enabled = true,
+          enabled = false,
           background = false,
           foreground = false,
           virtual_text = true,
