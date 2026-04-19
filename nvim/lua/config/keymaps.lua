@@ -1,52 +1,56 @@
-vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>')
+local map = function(mode, lhs, rhs, desc)
+  vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc })
+end
+
+map('n', '<leader>h', '<cmd>nohlsearch<CR>', 'Clear search highlights')
 
 -- Disable some default keymaps
-vim.keymap.set('n', '<F1>', '<nop>')
+map('n', '<F1>', '<nop>', 'Disable F1')
 
 -- Move highlighted code blocks
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv")
+map('v', 'J', ":m '>+1<CR>gv=gv", 'Move selection down')
+map('v', 'K', ":m '>-2<CR>gv=gv", 'Move selection up')
 
 -- Keep pasted item in clipboard
-vim.keymap.set('x', '<leader>p', '\"_dP')
+map('x', '<leader>p', '\"_dP', 'Paste without yanking')
 
 -- Yank into system clipboard
-vim.keymap.set('n', '<leader>y', '\"+y')
-vim.keymap.set('v', '<leader>Y', '\"+y')
-vim.keymap.set('n', '<leader>Y', '\"+Y')
+map('n', '<leader>y', '\"+y', 'Yank to system clipboard')
+map('v', '<leader>Y', '\"+y', 'Yank selection to system clipboard')
+map('n', '<leader>Y', '\"+Y', 'Yank line to system clipboard')
 
 -- Keep cursor centered on up/down half-page
-vim.keymap.set('n', '<C-d>', '<C-d>zz')
-vim.keymap.set('n', '<C-u>', '<C-u>zz')
+map('n', '<C-d>', '<C-d>zz', 'Half-page down and center')
+map('n', '<C-u>', '<C-u>zz', 'Half-page up and center')
 
--- Improved movemen
-vim.keymap.set('n', 'J', '5j')
-vim.keymap.set('n', 'K', '5k')
-vim.keymap.set('x', 'J', '5j')
-vim.keymap.set('x', 'K', '5k')
+-- Improved movement
+map('n', 'J', '5j', 'Move down 5 lines')
+map('n', 'K', '5k', 'Move up 5 lines')
+map('x', 'J', '5j', 'Move down 5 lines')
+map('x', 'K', '5k', 'Move up 5 lines')
 
 -- Split navigation
-vim.keymap.set('n', '<C-h>', '<C-w>h')
-vim.keymap.set('n', '<C-l>', '<C-w>l')
-vim.keymap.set('n', '<C-k>', '<C-w>k')
-vim.keymap.set('n', '<C-j>', '<C-w>j')
-vim.keymap.set('n', '<C-w>-', ':resize -3<CR>')
-vim.keymap.set('n', '<C-w>=', ':resize +3<CR>')
+map('n', '<C-h>', '<C-w>h', 'Focus left split')
+map('n', '<C-l>', '<C-w>l', 'Focus right split')
+map('n', '<C-k>', '<C-w>k', 'Focus upper split')
+map('n', '<C-j>', '<C-w>j', 'Focus lower split')
+map('n', '<C-w>-', '<cmd>resize -3<CR>', 'Decrease split height')
+map('n', '<C-w>=', '<cmd>resize +3<CR>', 'Increase split height')
 
 -- Tab navigation
-vim.keymap.set('n', '<C-t>', ':tabedit<CR>')
-vim.keymap.set('n', '<C-x>', ':tabclose<CR>')
-vim.keymap.set('n', '<S-Tab>', ':tabprevious<CR>')
-vim.keymap.set('n', '<Tab>', ':tabnext<CR>')
+map('n', '<C-t>', '<cmd>tabedit<CR>', 'New tab')
+map('n', '<C-x>', '<cmd>tabclose<CR>', 'Close tab')
+map('n', '<S-Tab>', '<cmd>tabprevious<CR>', 'Previous tab')
+map('n', '<Tab>', '<cmd>tabnext<CR>', 'Next tab')
 
 -- No yank on X
 -- vim.keymap.set('n', 'x', '_x')
 
 -- Select All
-vim.keymap.set('n', '<C-a>', 'gg<S-v>G')
+map('n', '<C-a>', 'gg<S-v>G', 'Select all')
 
 -- Open simulator
-vim.keymap.set('n', '<leader>os', ':silent !open -a simulator<CR>')
+map('n', '<leader>os', '<cmd>silent !open -a simulator<CR>', 'Open iOS Simulator')
 
 -- Reload current plugin in development
 -- vim.keymap.set('n', '<leader>bb', ':lua require("arrowhead").swap_notation(false)<CR>')

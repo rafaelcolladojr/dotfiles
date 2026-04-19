@@ -1,7 +1,7 @@
 return {
   {
     'dart-lang/dart-vim-plugin',
-    enabled = false,
+    enabled = true,
     lazy = true,
     ft = "dart",
     init = function()
@@ -62,41 +62,19 @@ return {
       },
     },
     init = function()
-      vim.keymap.set('n', '<leader>fr', ':FlutterReload<CR>')
-      vim.keymap.set('n', '<leader>fR', ':FlutterRestart<CR>')
-      vim.keymap.set('n', '<leader>fs', ':FlutterVSplit<CR>')
-      vim.keymap.set('n', '<leader>fS', ':FlutterSplit<CR>')
-      vim.keymap.set('n', '<leader>ff', ':FlutterRun<CR>')
-      vim.keymap.set('n', '<leader>fv', ':FlutterVisualDebug<CR>')
-      vim.keymap.set('n', '<leader>fq', ':FlutterQuit<CR>:lua require("dapui").close()<CR>')
-
-      local
-      function reload_dartls_if_inactive()
-        local dartls_client
-        for _, client in ipairs(vim.lsp.get_clients()) do
-          if client.name == "dartls" then
-            dartls_client = client
-            break
-          end
-        end
-
-        vim.defer_fn(function()
-          if dartls_client and not dartls_client.is_stopped() then
-            return
-          end
-
-          if dartls_client and dartls_client.stop then
-            dartls_client.stop()
-          end
-
-          require("flutter-tools.lsp").attach()
-        end, 2000)
+      local map = function(lhs, rhs, desc)
+        vim.keymap.set('n', lhs, rhs, { silent = true, desc = desc })
       end
-
-      vim.api.nvim_create_autocmd("BufWritePost", {
-        pattern = "*.dart",
-        callback = reload_dartls_if_inactive,
-      })
+      map('<leader>fr', '<cmd>FlutterReload<CR>', 'Flutter reload')
+      map('<leader>fR', '<cmd>FlutterRestart<CR>', 'Flutter restart')
+      map('<leader>fs', '<cmd>FlutterVSplit<CR>', 'Flutter vsplit')
+      map('<leader>fS', '<cmd>FlutterSplit<CR>', 'Flutter split')
+      map('<leader>ff', '<cmd>FlutterRun<CR>', 'Flutter run')
+      map('<leader>fv', '<cmd>FlutterVisualDebug<CR>', 'Flutter visual debug')
+      map('<leader>fq', function()
+        vim.cmd('FlutterQuit')
+        require("dapui").close()
+      end, 'Flutter quit')
     end
   },
   {

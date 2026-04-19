@@ -14,13 +14,15 @@ return {
     },
     config = function()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
+      local lsp_attach_group = vim.api.nvim_create_augroup('RaffLspAttach', { clear = true })
+      local lsp_format_group = vim.api.nvim_create_augroup('RaffLspFormatOnSave', { clear = true })
       capabilities.textDocument.completion.completionItem.snippetSupport = true
-      -- require('lspconfig').dartls.setup { capabilities = capabilities }
-      require('lspconfig').gleam.setup { capabilities = capabilities }
-      require 'lspconfig'.cssls.setup { capabilities = capabilities }
-      require 'lspconfig'.html.setup { capabilities = capabilities }
-      require 'lspconfig'.remark_ls.setup { capabilities = capabilities }
-      require('lspconfig').lua_ls.setup {
+      -- vim.lsp.config('dartls', { capabilities = capabilities })
+      vim.lsp.config('gleam', { capabilities = capabilities })
+      vim.lsp.config('cssls', { capabilities = capabilities })
+      vim.lsp.config('html', { capabilities = capabilities })
+      vim.lsp.config('remark_ls', { capabilities = capabilities })
+      vim.lsp.config('lua_ls', {
         capabilities = capabilities,
         Lua = {
           completion = {
@@ -62,7 +64,7 @@ return {
           },
           telemetry = { enable = false },
         }
-      }
+      })
 
       vim.diagnostic.config({
         update_in_insert = true,
@@ -71,44 +73,50 @@ return {
 
 
       vim.api.nvim_create_autocmd('LspAttach', {
+        group = lsp_attach_group,
         callback = function(args)
           local client = vim.lsp.get_client_by_id(args.data.client_id)
           if not client then return end
+          local map = function(mode, lhs, rhs, desc)
+            vim.keymap.set(mode, lhs, rhs, { buffer = args.buf, silent = true, desc = desc })
+          end
 
           -- if client.supports_method('textDocument/codeAction') then
-          vim.keymap.set('n', '<leader>fa', ':Lspsaga code_action<CR>')
+          map('n', '<leader>fa', '<cmd>Lspsaga code_action<CR>', 'LSP code action')
           -- end
           -- if client.supports_method('textDocument/definition') then
-          vim.keymap.set('n', 'gd', ':Lspsaga goto_definition<CR>')
+          map('n', 'gd', '<cmd>Lspsaga goto_definition<CR>', 'LSP goto definition')
           -- end
           -- if client.supports_method('textDocument/hover') then
-          vim.keymap.set('n', '<leader>fh', ':Lspsaga hover_doc<CR>')
+          map('n', '<leader>fh', '<cmd>Lspsaga hover_doc<CR>', 'LSP hover')
           -- end
           -- if client.supports_method('textDocument/rename') then
-          vim.keymap.set('n', '<F2>', ':Lspsaga rename<CR>')
+          map('n', '<F2>', '<cmd>Lspsaga rename<CR>', 'LSP rename symbol')
           -- end
           -- if client.supports_method('textDocument/implementation') then
-          vim.keymap.set('n', 'gi', ':Telescope lsp_implementations<CR>')
+          map('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', 'LSP implementations')
           -- end
           -- if client.supports_method('textDocument/references') then
-          vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>')
+          map('n', 'gr', '<cmd>Telescope lsp_references<CR>', 'LSP references')
           -- end
           -- For some reason dartls isn't listing textDocument/diagnostic as a
           -- supported method...
-          vim.keymap.set('n', '<leader>fn', ":Lspsaga diagnostic_jump_next<CR>")
-          vim.keymap.set('n', '<leader>fp', ":Lspsaga diagnostic_jump_prev<CR>")
+          map('n', '<leader>fn', '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Next diagnostic')
+          map('n', '<leader>fp', '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous diagnostic')
 
           local function toggleDiagnostics()
             vim.diagnostic.enable(not vim.diagnostic.is_enabled())
           end
 
-          vim.keymap.set('n', '<leader>dt', function() toggleDiagnostics() end)
+          map('n', '<leader>dt', function() toggleDiagnostics() end, 'Toggle diagnostics')
 
           -- Let's not do this for dart files, since we have a plugin for that
           -- if vim.bo.filetype ~= 'dart' then
-          if client.supports_method('textDocument/formatting') then
+          if client.name ~= 'dartls' and client.supports_method('textDocument/formatting') then
             -- Format the current buffer on save
+            vim.api.nvim_clear_autocmds({ group = lsp_format_group, buffer = args.buf })
             vim.api.nvim_create_autocmd('BufWritePre', {
+              group = lsp_format_group,
               buffer = args.buf,
               callback = function()
                 vim.lsp.buf.format({ bufnr = args.buf, id = client.id })

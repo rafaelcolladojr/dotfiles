@@ -23,7 +23,7 @@ vim.opt.wildmode = 'longest:full'
 vim.opt.wildoptions = 'pum'
 vim.opt.showmode = false
 vim.opt.showcmd = true
-vim.opt.cmdheight = 1;
+vim.opt.cmdheight = 1
 
 -- use spaces for tabs and stuff
 vim.opt.expandtab = true

@@ -34,10 +34,15 @@ return {
       },
     },
     init = function()
+      local map = function(lhs, rhs, desc)
+        vim.keymap.set('n', lhs, rhs, { silent = true, desc = desc })
+      end
       -- NOTIFIER
       ---@type table<number, {token:lsp.ProgressToken, msg:string, done:boolean}[]>
       local progress = vim.defaulttable()
+      local progress_group = vim.api.nvim_create_augroup('RaffSnacksLspProgress', { clear = true })
       vim.api.nvim_create_autocmd("LspProgress", {
+        group = progress_group,
         ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
         callback = function(ev)
           local client = vim.lsp.get_client_by_id(ev.data.client_id)
@@ -82,8 +87,8 @@ return {
 
 
       -- KEYBINDINGS
-      vim.keymap.set('n', '<leader>lg', ':lua Snacks.lazygit.open()<CR>')
-      vim.keymap.set('n', '<leader>z', ':lua Snacks.zen()<CR>')
+      map('<leader>lg', function() Snacks.lazygit.open() end, 'Open Lazygit')
+      map('<leader>z', function() Snacks.zen() end, 'Toggle Zen mode')
     end
   }
 }

@@ -8,7 +8,6 @@ return {
       require('mini.icons').setup()
       require('mini.sessions').setup()
       require('mini.surround').setup()
-      require('mini.pairs').setup()
     end
   }
 }

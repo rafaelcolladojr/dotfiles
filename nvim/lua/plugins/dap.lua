@@ -75,6 +75,9 @@ return {
     },
     init = function()
       local dap, dapui = require("dap"), require("dapui")
+      local map = function(mode, lhs, rhs, desc)
+        vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc })
+      end
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end
@@ -92,14 +95,16 @@ return {
       sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
 
 
-      vim.keymap.set('n', '<leader>db', ':lua require("dap").toggle_breakpoint()<CR>')
-      vim.keymap.set('n', '<leader>dB', ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint Condition: "))<CR>')
-      vim.keymap.set('n', '<leader>dd', ':lua require("dap").continue()<CR>')
-      vim.keymap.set('n', '<leader>do', ':lua require("dap").step_over()<CR>')
-      vim.keymap.set('n', '<leader>di', ':lua require("dap").step_ito()<CR>')
-      vim.keymap.set('n', '<leader>dh', ':lua require("dap").toggle()<CR>')
+      map('n', '<leader>db', function() dap.toggle_breakpoint() end, 'DAP toggle breakpoint')
+      map('n', '<leader>dB', function()
+        dap.set_breakpoint(vim.fn.input("Breakpoint Condition: "))
+      end, 'DAP conditional breakpoint')
+      map('n', '<leader>dd', function() dap.continue() end, 'DAP continue')
+      map('n', '<leader>do', function() dap.step_over() end, 'DAP step over')
+      map('n', '<leader>di', function() dap.step_into() end, 'DAP step into')
+      map('n', '<leader>dh', function() dapui.toggle() end, 'DAP UI toggle')
 
-      vim.keymap.set('v', '<C-k>', 'lua require("dapui").eval()<CR>')
+      map('v', '<C-k>', function() dapui.eval() end, 'DAP eval selection')
     end
   },
 }

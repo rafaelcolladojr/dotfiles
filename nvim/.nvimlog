@@ -1,0 +1,7 @@
+WRN 2026-02-26T12:26:17.262 ?.31433    server_start:199: Failed to start server: no such file or directory: /run/user/502/
+WRN 2026-02-26T12:29:07.560 ?.31737    server_start:199: Failed to start server: no such file or directory: /run/user/502/
+WRN 2026-02-26T12:49:37.913 ?.32696    server_start:199: Failed to start server: no such file or directory: /run/user/502/
+WRN 2026-02-26T12:53:11.541 ?.33461    server_start:199: Failed to start server: no such file or directory: /run/user/502/
+WRN 2026-02-26T12:53:37.620 ?.33576    server_start:199: Failed to start server: no such file or directory: /run/user/502/
+WRN 2026-02-26T13:02:18.926 ?.34452    server_start:199: Failed to start server: no such file or directory: /run/user/502/
+WRN 2026-02-26T13:11:46.637 ?.35102    server_start:199: Failed to start server: no such file or directory: /run/user/502/

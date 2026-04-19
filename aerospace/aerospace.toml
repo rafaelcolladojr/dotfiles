@@ -1,21 +1,16 @@
 # Place a copy of this config to ~/.aerospace.toml
 # After that, you can edit ~/.aerospace.toml to your liking
 
-# You can use it to add commands that run after login to macOS user session.
-# 'start-at-login' needs to be 'true' for 'after-login-command' to work
-# Available commands: https://nikitabobko.github.io/AeroSpace/commands
-after-login-command = [
+# You can use it to add commands that run after AeroSpace startup.
+# 'after-startup-command' is run after 'after-login-command'
+# Available commands : https://nikitabobko.github.io/AeroSpace/commands
+after-startup-command = [
 'exec-and-forget open -n /Applications/Ghostty.app',
 'exec-and-forget open -n /Applications/Google Chrome.app/',
 'exec-and-forget open -n /Applications/Sunsama.app',
 'exec-and-forget open -n /Applications/Spotify.app/'
 # 'exec-and-forget open -n /Applications/Google Chrome.app/ --args --new-window "https://music.youtube.com/"',
 ]
-
-# You can use it to add commands that run after AeroSpace startup.
-# 'after-startup-command' is run after 'after-login-command'
-# Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = []
 
 # Start AeroSpace at login
 start-at-login = true
@@ -200,17 +195,22 @@ alt-q = 'close'
 # Applications launch
 alt-enter = 'exec-and-forget open -na /Applications/Ghostty.app/'
 alt-b = 'exec-and-forget open -na /Applications/Google\ Chrome.app/' 
-alt-m = 'exec-and-forget open -n /Applications/Spotify.app/'
+# alt-m = 'exec-and-forget open -n /Applications/Spotify.app/'
 
 
 # Assign programs to workspaces
 [[on-window-detected]]
-if.app-id = 'org.ghostty'
+if.app-id = 'com.mitchellh.ghostty'
 if.during-aerospace-startup = true
 run = ['move-node-to-workspace 1']
 
 [[on-window-detected]]
 if.app-id = 'com.microsoft.teams2'
+if.during-aerospace-startup = true
+run = ['move-node-to-workspace 2']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.MobileSMS'
 if.during-aerospace-startup = true
 run = ['move-node-to-workspace 2']
 
@@ -223,6 +223,10 @@ run = ['move-node-to-workspace 3']
 if.app-id = 'com.microsoft.Outlook'
 if.during-aerospace-startup = true
 run = ['move-node-to-workspace 4']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.iphonesimulator'
+run = 'layout tiling'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes

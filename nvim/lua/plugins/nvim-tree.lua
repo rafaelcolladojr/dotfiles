@@ -24,6 +24,6 @@ return {
     },
   },
   init = function()
-    vim.keymap.set('n', '<c-n>', ':NvimTreeFindFileToggle<CR>')
+    vim.keymap.set('n', '<c-n>', '<cmd>NvimTreeFindFileToggle<CR>', { silent = true, desc = 'Toggle file tree' })
   end,
 }

@@ -11,7 +11,7 @@ return {
         ---@diagnostic disable-next-line: missing-fields
         require('nvim-treesitter.configs').setup({
           -- A list of parser names, or "all"
-          ensure_installed = { 'dart', 'gleam', 'lua', 'vim', 'vimdoc', 'java', 'kotlin', 'latex' },
+          ensure_installed = { 'dart', 'gleam', 'lua', 'vim', 'vimdoc', 'java', 'kotlin'},
 
           auto_install = false,
           sync_install = false,
