@@ -112,7 +112,7 @@ return {
 
           -- Let's not do this for dart files, since we have a plugin for that
           -- if vim.bo.filetype ~= 'dart' then
-          if client.name ~= 'dartls' and client.supports_method('textDocument/formatting') then
+          if client.name ~= 'dartls' and client:supports_method('textDocument/formatting') then
             -- Format the current buffer on save
             vim.api.nvim_clear_autocmds({ group = lsp_format_group, buffer = args.buf })
             vim.api.nvim_create_autocmd('BufWritePre', {
