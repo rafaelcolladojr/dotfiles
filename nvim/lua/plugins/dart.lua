@@ -6,7 +6,7 @@ return {
     ft = "dart",
     init = function()
       vim.g.dart_style_guide = 2
-      vim.g.dart_format_on_save = 1
+      vim.g.dart_format_on_save = 0
       vim.g.dart_trailing_comma_indent = true
     end,
   },
@@ -38,6 +38,16 @@ return {
         enabled = false,
       },
       lsp = {
+        on_attach = function(client, bufnr)
+          if client:supports_method('textDocument/formatting') then
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              buffer = bufnr,
+              callback = function()
+                vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
+              end,
+            })
+          end
+        end,
         color = {
           enabled = false,
           background = false,
@@ -55,9 +65,6 @@ return {
         enabled = true,
         run_via_dap = true,
         exception_breakpoints = {},
-        register_configurations = function(_)
-          require('dap').configurations.dart = {}
-        end,
       },
     },
     init = function()
