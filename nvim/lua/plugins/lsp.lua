@@ -9,7 +9,77 @@ return {
         dependencies = {
           'nvim-treesitter/nvim-treesitter',
           'nvim-tree/nvim-web-devicons',
-        }
+        },
+        config = function(_, opts)
+          require('lspsaga').setup(opts)
+          -- Patch goto_pos: Lspsaga b821192 moved to vim.diagnostic.jump with
+          -- on_jump, but Neovim 0.12 schedules on_jump asynchronously, so the
+          -- float isn't ready when the code-action enrichment runs.
+          -- Fix: open the float synchronously after the jump instead.
+          local diag_ctx = require('lspsaga.diagnostic')
+          local diag_mt = getmetatable(diag_ctx)
+          local saga_config = require('lspsaga').config
+
+          diag_mt.goto_pos = function(self, pos, jump_opts)
+            local entry = vim.diagnostic.jump(vim.tbl_extend('keep', {
+              count = pos == 1 and 1 or -1,
+            }, jump_opts or {}))
+
+            if not entry then return end
+
+            vim.diagnostic.open_float({
+              border = saga_config.ui.border,
+              format = function(d)
+                if not vim.bo[vim.api.nvim_get_current_buf()].filetype == 'rust' then
+                  return d.message
+                end
+                return d.message:find('\\n`$') and d.message:gsub('\\n`$', '`') or d.message
+              end,
+              header = '',
+              prefix = { '• ', 'Title' },
+            })
+
+            require('lspsaga.util').valid_markdown_parser()
+            require('lspsaga.beacon').jump_beacon(
+              { entry.lnum, entry.col },
+              #vim.api.nvim_get_current_line()
+            )
+
+            vim.schedule(function()
+              if not self:valid_win_buf() then return end
+              vim.bo[self.float_bufnr].filetype = 'markdown'
+              vim.wo[self.float_winid].conceallevel = 2
+              vim.wo[self.float_winid].cocu = 'niv'
+              vim.bo[self.float_bufnr].bufhidden = 'wipe'
+              vim.api.nvim_create_autocmd('WinClosed', {
+                buffer = self.float_bufnr,
+                once = true,
+                callback = function() self:clean_data() end,
+              })
+
+              local util = require('lspsaga.util')
+              if #util.get_client_by_method('textDocument/codeAction') == 0 then return end
+              local curbuf = vim.api.nvim_get_current_buf()
+              local diagnostics = self:get_cursor_diagnostic()
+              local win_conf = vim.api.nvim_win_get_config(self.float_winid)
+              local act = require('lspsaga.codeaction')
+              act:send_request(curbuf, {
+                context = { diagnostics = diagnostics },
+                range = {
+                  start = { entry.lnum + 1, (entry.col or 1) },
+                  ['end'] = { entry.lnum + 1, (entry.col or 1) },
+                },
+                gitsign = false,
+              }, function(action_tuples, enriched_ctx)
+                if #action_tuples == 0 or not self:valid_win_buf() then return end
+                vim.bo[self.float_bufnr].modifiable = true
+                self.main_buf = curbuf
+                self:code_action_cb(action_tuples, enriched_ctx, win_conf)
+                vim.bo[self.float_bufnr].modifiable = false
+              end)
+            end)
+          end
+        end,
       }
     },
     config = function()
@@ -100,12 +170,8 @@ return {
           -- end
           -- For some reason dartls isn't listing textDocument/diagnostic as a
           -- supported method...
-          map('n', '<leader>fn', function()
-            vim.diagnostic.jump({ count = 1, float = true })
-          end, 'Next diagnostic')
-          map('n', '<leader>fp', function()
-            vim.diagnostic.jump({ count = -1, float = true })
-          end, 'Previous diagnostic')
+          map('n', '<leader>fn', '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Next diagnostic')
+          map('n', '<leader>fp', '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous diagnostic')
 
           local function toggleDiagnostics()
             vim.diagnostic.enable(not vim.diagnostic.is_enabled())
