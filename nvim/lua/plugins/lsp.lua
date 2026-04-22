@@ -100,8 +100,12 @@ return {
           -- end
           -- For some reason dartls isn't listing textDocument/diagnostic as a
           -- supported method...
-          map('n', '<leader>fn', '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Next diagnostic')
-          map('n', '<leader>fp', '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous diagnostic')
+          map('n', '<leader>fn', function()
+            vim.diagnostic.jump({ count = 1, float = true })
+          end, 'Next diagnostic')
+          map('n', '<leader>fp', function()
+            vim.diagnostic.jump({ count = -1, float = true })
+          end, 'Previous diagnostic')
 
           local function toggleDiagnostics()
             vim.diagnostic.enable(not vim.diagnostic.is_enabled())
