@@ -65,6 +65,12 @@ return {
         enabled = true,
         run_via_dap = true,
         exception_breakpoints = {},
+        register_configurations = function(_)
+          local vscode = require("dap.ext.vscode")
+          local configs = vscode.getconfigs()
+          local dap = require("dap")
+          dap.configurations.dart = vim.list_extend(dap.configurations.dart or {}, configs)
+        end,
       },
     },
     init = function()
