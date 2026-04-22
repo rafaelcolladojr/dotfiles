@@ -27,25 +27,27 @@ return {
 
             if not entry then return end
 
-            vim.diagnostic.open_float({
-              border = saga_config.ui.border,
-              format = function(d)
-                if not vim.bo[vim.api.nvim_get_current_buf()].filetype == 'rust' then
-                  return d.message
-                end
-                return d.message:find('\\n`$') and d.message:gsub('\\n`$', '`') or d.message
-              end,
-              header = '',
-              prefix = { '• ', 'Title' },
-            })
-
             require('lspsaga.util').valid_markdown_parser()
             require('lspsaga.beacon').jump_beacon(
               { entry.lnum, entry.col },
               #vim.api.nvim_get_current_line()
             )
 
+            -- Open float inside vim.schedule so pending CursorMoved events
+            -- from the jump are processed first and don't close the float.
             vim.schedule(function()
+              vim.diagnostic.open_float({
+                border = saga_config.ui.border,
+                format = function(d)
+                  if not vim.bo[vim.api.nvim_get_current_buf()].filetype == 'rust' then
+                    return d.message
+                  end
+                  return d.message:find('\\n`$') and d.message:gsub('\\n`$', '`') or d.message
+                end,
+                header = '',
+                prefix = { '• ', 'Title' },
+              })
+
               if not self:valid_win_buf() then return end
               vim.bo[self.float_bufnr].filetype = 'markdown'
               vim.wo[self.float_winid].conceallevel = 2
