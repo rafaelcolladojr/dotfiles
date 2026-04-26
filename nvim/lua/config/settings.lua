@@ -8,7 +8,7 @@ vim.opt.autowrite = true
 vim.opt.cursorline = false
 vim.opt.signcolumn = 'yes'
 vim.opt.autoread = true
--- vim.opt.colorcolumn = '80'
+vim.opt.colorcolumn = '80'
 vim.opt.termguicolors = true
 
 -- Relative line numbers
