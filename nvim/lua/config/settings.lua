@@ -5,7 +5,7 @@ vim.opt.backspace = '2'
 -- editor settings
 vim.opt.laststatus = 2
 vim.opt.autowrite = true
-vim.opt.cursorline = false
+vim.opt.cursorline = true
 vim.opt.signcolumn = 'yes'
 vim.opt.autoread = true
 vim.opt.colorcolumn = '80'
@@ -23,7 +23,7 @@ vim.opt.wildmode = 'longest:full'
 vim.opt.wildoptions = 'pum'
 vim.opt.showmode = false
 vim.opt.showcmd = true
-vim.opt.cmdheight = 1
+vim.opt.cmdheight = 0
 
 -- use spaces for tabs and stuff
 vim.opt.expandtab = true
@@ -53,6 +53,7 @@ vim.opt.splitbelow = true
 
 -- Enable mouse support
 vim.opt.mouse = 'a'
+vim.opt.smoothscroll = true
 
 -- Enable syntax-based folding
 vim.opt.foldmethod = 'manual'

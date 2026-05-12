@@ -6,7 +6,6 @@ return {
       require('mini.ai').setup()
       require('mini.cursorword').setup()
       require('mini.icons').setup()
-      require('mini.sessions').setup()
       require('mini.surround').setup()
     end
   }

@@ -1,4 +1,5 @@
 return {
+  'tpope/vim-sleuth',
   {
     'saghen/blink.cmp',
     dependencies = {

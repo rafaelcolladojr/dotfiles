@@ -2,7 +2,7 @@ local map = function(mode, lhs, rhs, desc)
   vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc })
 end
 
-map('n', '<leader>h', '<cmd>nohlsearch<CR>', 'Clear search highlights')
+map('n', '<leader>nh', '<cmd>nohlsearch<CR>', 'Clear search highlights')
 
 -- Disable some default keymaps
 map('n', '<F1>', '<nop>', 'Disable F1')
@@ -29,11 +29,7 @@ map('n', 'K', '5k', 'Move up 5 lines')
 map('x', 'J', '5j', 'Move down 5 lines')
 map('x', 'K', '5k', 'Move up 5 lines')
 
--- Split navigation
-map('n', '<C-h>', '<C-w>h', 'Focus left split')
-map('n', '<C-l>', '<C-w>l', 'Focus right split')
-map('n', '<C-k>', '<C-w>k', 'Focus upper split')
-map('n', '<C-j>', '<C-w>j', 'Focus lower split')
+-- Split resizing (navigation handled by tmux-navigation plugin)
 map('n', '<C-w>-', '<cmd>resize -3<CR>', 'Decrease split height')
 map('n', '<C-w>=', '<cmd>resize +3<CR>', 'Increase split height')
 

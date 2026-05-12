@@ -11,11 +11,13 @@ return {
       },
       transparent_background = true,
       integrations = {
-        cmp = true,
+        blink_cmp = true,
         dap = true,
         dap_ui = true,
-        fidget = true,
+        gitsigns = true,
         harpoon = true,
+        lsp_saga = true,
+        mini = { enabled = true },
         native_lsp = {
           enabled = true,
           virtual_text = {
@@ -34,11 +36,11 @@ return {
             background = true,
           }
         },
-        nvimtree = true,
-        telescope = {
-          enabled = true,
-        },
+        noice = true,
+        notify = true,
+        snacks = true,
         treesitter = true,
+        which_key = true,
       },
     }
   },

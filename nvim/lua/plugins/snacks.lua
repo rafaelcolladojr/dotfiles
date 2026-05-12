@@ -1,9 +1,6 @@
 return {
   {
     'folke/snacks.nvim',
-    dependencies = {
-      'nvim-tree/nvim-tree.lua',
-    },
     enabled = true,
     priority = 1000,
     lazy = false,
@@ -11,12 +8,22 @@ return {
     opts = {
       animate = {},
       dashboard = {
-        enabled = false,
+        enabled = true,
+        preset = {
+          keys = {
+            { icon = " ", key = "f", desc = "Find File", action = ":lua require('fzf-lua').files()" },
+            { icon = " ", key = "r", desc = "Recent Files", action = ":lua require('fzf-lua').oldfiles()" },
+            { icon = " ", key = "g", desc = "Live Grep", action = ":lua require('fzf-lua').live_grep()" },
+            { icon = " ", key = "F", desc = "Flutter Run", action = ":FlutterRun" },
+            { icon = " ", key = "D", desc = "Flutter Devices", action = ":FlutterDevices" },
+            { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
+            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+          },
+        },
         sections = {
-          -- { section = "header" },
+          { section = "header" },
           { section = "keys", gap = 1, padding = 1 },
-          { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 2 },
-          { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 2 },
+          { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 2 },
           { section = "startup" },
         },
       },
@@ -25,7 +32,6 @@ return {
       lazygit = {},
       notifier = {},
       notify = {},
-      ---@type snacks.terminal.Config
       indent = {},
       win = {},
       zen = {
@@ -78,7 +84,7 @@ return {
             id = "lsp_progress",
             title = client.name,
             opts = function(notif)
-              notif.icon = #progress[client.id] == 0 and " "
+              notif.icon = #progress[client.id] == 0 and " "
                   or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
             end,
           })

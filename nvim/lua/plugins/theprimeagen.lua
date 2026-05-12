@@ -1,8 +1,5 @@
 return {
   {
-    'theprimeagen/vim-be-good',
-  },
-  {
     'theprimeagen/harpoon',
     branch = 'harpoon2',
     dependencies = { 'nvim-lua/plenary.nvim' },

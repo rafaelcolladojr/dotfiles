@@ -153,27 +153,27 @@ return {
           end
 
           -- if client.supports_method('textDocument/codeAction') then
-          map('n', '<leader>fa', '<cmd>Lspsaga code_action<CR>', 'LSP code action')
+          map('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>', 'LSP code action')
           -- end
           -- if client.supports_method('textDocument/definition') then
           map('n', 'gd', '<cmd>Lspsaga goto_definition<CR>', 'LSP goto definition')
           -- end
           -- if client.supports_method('textDocument/hover') then
-          map('n', '<leader>fh', '<cmd>Lspsaga hover_doc<CR>', 'LSP hover')
+          map('n', '<leader>ch', '<cmd>Lspsaga hover_doc<CR>', 'LSP hover')
           -- end
           -- if client.supports_method('textDocument/rename') then
           map('n', '<F2>', '<cmd>Lspsaga rename<CR>', 'LSP rename symbol')
           -- end
           -- if client.supports_method('textDocument/implementation') then
-          map('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', 'LSP implementations')
+          map('n', 'gi', '<cmd>FzfLua lsp_implementations<CR>', 'LSP implementations')
           -- end
           -- if client.supports_method('textDocument/references') then
-          map('n', 'gr', '<cmd>Telescope lsp_references<CR>', 'LSP references')
+          map('n', 'gr', '<cmd>FzfLua lsp_references<CR>', 'LSP references')
           -- end
           -- For some reason dartls isn't listing textDocument/diagnostic as a
           -- supported method...
-          map('n', '<leader>fn', '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Next diagnostic')
-          map('n', '<leader>fp', '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous diagnostic')
+          map('n', '<leader>dn', '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Next diagnostic')
+          map('n', '<leader>dp', '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous diagnostic')
 
           local function toggleDiagnostics()
             vim.diagnostic.enable(not vim.diagnostic.is_enabled())

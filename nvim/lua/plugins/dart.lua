@@ -1,23 +1,10 @@
 return {
   {
-    'dart-lang/dart-vim-plugin',
-    enabled = true,
-    lazy = true,
-    ft = "dart",
-    init = function()
-      vim.g.dart_style_guide = 2
-      vim.g.dart_format_on_save = 0
-      vim.g.dart_trailing_comma_indent = true
-    end,
-  },
-  {
     'akinsho/flutter-tools.nvim',
     lazy = true,
     ft = "dart",
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'stevearc/dressing.nvim',
-
     },
     opts = {
       decorations = {
@@ -26,9 +13,6 @@ return {
           device = true,
         },
       },
-      -- widget_guides = {
-      --   enabled = false,
-      -- },
       closing_tags = {
         highlight = 'Comment',
         prefix = '//',
@@ -87,17 +71,4 @@ return {
       end, 'Flutter quit')
     end
   },
-  {
-    'wa11breaker/flutter-bloc.nvim',
-    dependencies = {
-      "nvimtools/none-ls.nvim",
-    },
-    lazy = true,
-    ft = "dart",
-    opts = {
-      bloc_type = 'default',
-      use_sealed_classes = false,
-      enable_code_actions = true,
-    }
-  }
 }
