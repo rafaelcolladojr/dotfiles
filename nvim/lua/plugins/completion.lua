@@ -57,7 +57,7 @@ return {
           }
         }
       },
-      fuzzy = { implementation = 'prefer_native_with_fallback' },
+      fuzzy = { implementation = 'prefer_rust' },
       keymap = { preset = 'default' },
       signature = { enabled = true },
       snippets = { preset = 'luasnip' },
