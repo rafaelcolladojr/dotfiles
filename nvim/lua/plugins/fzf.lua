@@ -19,6 +19,14 @@ return {
       },
     },
     config = function(_, opts)
+      -- Ensure XDG_RUNTIME_DIR exists (macOS doesn't set this by default)
+      local runtime_dir = vim.env.XDG_RUNTIME_DIR
+      if not runtime_dir or vim.fn.isdirectory(runtime_dir) == 0 then
+        runtime_dir = vim.fn.stdpath('run') or ('/tmp/nvim-' .. vim.env.USER)
+        vim.fn.mkdir(runtime_dir, 'p')
+        vim.env.XDG_RUNTIME_DIR = runtime_dir
+      end
+
       local fzf = require('fzf-lua')
       fzf.setup(opts)
       fzf.register_ui_select()
