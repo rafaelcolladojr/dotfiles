@@ -18,8 +18,7 @@ return {
 
       local scratchTerm = Terminal:new(termArgs)
 
-      --Flutter integration
-      vim.keymap.set('n', '<leader>ft', function()
+      vim.keymap.set('n', '<leader>t', function()
         scratchTerm:toggle()
       end, { noremap = true, silent = true, desc = 'Toggle scratch terminal' })
 

@@ -152,34 +152,15 @@ return {
             vim.keymap.set(mode, lhs, rhs, { buffer = args.buf, silent = true, desc = desc })
           end
 
-          -- if client.supports_method('textDocument/codeAction') then
-          map('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>', 'LSP code action')
-          -- end
-          -- if client.supports_method('textDocument/definition') then
-          map('n', 'gd', '<cmd>Lspsaga goto_definition<CR>', 'LSP goto definition')
-          -- end
-          -- if client.supports_method('textDocument/hover') then
-          map('n', '<leader>ch', '<cmd>Lspsaga hover_doc<CR>', 'LSP hover')
-          -- end
-          -- if client.supports_method('textDocument/rename') then
-          map('n', '<F2>', '<cmd>Lspsaga rename<CR>', 'LSP rename symbol')
-          -- end
-          -- if client.supports_method('textDocument/implementation') then
-          map('n', 'gi', '<cmd>FzfLua lsp_implementations<CR>', 'LSP implementations')
-          -- end
-          -- if client.supports_method('textDocument/references') then
-          map('n', 'gr', '<cmd>FzfLua lsp_references<CR>', 'LSP references')
-          -- end
-          -- For some reason dartls isn't listing textDocument/diagnostic as a
-          -- supported method...
+          map('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>', 'Code action')
+          map('n', '<leader>ch', '<cmd>Lspsaga hover_doc<CR>', 'Hover doc')
+          map('n', '<leader>cr', '<cmd>Lspsaga rename<CR>', 'Rename symbol')
+          map('n', 'gd', '<cmd>Lspsaga goto_definition<CR>', 'Goto definition')
+          map('n', 'gi', '<cmd>FzfLua lsp_implementations<CR>', 'Implementations')
+          map('n', 'gr', '<cmd>FzfLua lsp_references<CR>', 'References')
           map('n', '<leader>dn', '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Next diagnostic')
-          map('n', '<leader>dp', '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous diagnostic')
-
-          local function toggleDiagnostics()
-            vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-          end
-
-          map('n', '<leader>dt', function() toggleDiagnostics() end, 'Toggle diagnostics')
+          map('n', '<leader>dp', '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Prev diagnostic')
+          map('n', '<leader>dt', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, 'Toggle diagnostics')
 
           if client:supports_method('textDocument/formatting') then
             -- Format the current buffer on save

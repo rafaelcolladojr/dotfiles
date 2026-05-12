@@ -2,8 +2,6 @@ local map = function(mode, lhs, rhs, desc)
   vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc })
 end
 
-map('n', '<leader>nh', '<cmd>nohlsearch<CR>', 'Clear search highlights')
-
 -- Disable some default keymaps
 map('n', '<F1>', '<nop>', 'Disable F1')
 
@@ -12,12 +10,7 @@ map('v', 'J', ":m '>+1<CR>gv=gv", 'Move selection down')
 map('v', 'K', ":m '>-2<CR>gv=gv", 'Move selection up')
 
 -- Keep pasted item in clipboard
-map('x', '<leader>p', '\"_dP', 'Paste without yanking')
-
--- Yank into system clipboard
-map('n', '<leader>y', '\"+y', 'Yank to system clipboard')
-map('v', '<leader>Y', '\"+y', 'Yank selection to system clipboard')
-map('n', '<leader>Y', '\"+Y', 'Yank line to system clipboard')
+map('x', '<leader>p', '"_dP', 'Paste without yanking')
 
 -- Keep cursor centered on up/down half-page
 map('n', '<C-d>', '<C-d>zz', 'Half-page down and center')
@@ -39,15 +32,11 @@ map('n', '<C-x>', '<cmd>tabclose<CR>', 'Close tab')
 map('n', '<S-Tab>', '<cmd>tabprevious<CR>', 'Previous tab')
 map('n', '<Tab>', '<cmd>tabnext<CR>', 'Next tab')
 
--- No yank on X
--- vim.keymap.set('n', 'x', '_x')
-
 -- Select All
 map('n', '<C-a>', 'gg<S-v>G', 'Select all')
 
 -- Open simulator
 map('n', '<leader>os', '<cmd>silent !open -a simulator<CR>', 'Open iOS Simulator')
 
--- Reload current plugin in development
--- vim.keymap.set('n', '<leader>bb', ':lua require("arrowhead").swap_notation(false)<CR>')
--- vim.keymap.set('n', '<leader>t', '<Plug>PlenaryTestFile<CR>')
+-- Clear search highlights
+map('n', '<Esc>', '<cmd>nohlsearch<CR>', 'Clear search highlights')

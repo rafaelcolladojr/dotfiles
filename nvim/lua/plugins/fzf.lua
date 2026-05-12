@@ -32,10 +32,10 @@ return {
         vim.keymap.set('n', lhs, rhs, { silent = true, desc = desc })
       end
 
-      map('<C-p>', fzf.files, 'Find files')
-      map('<Space><Space>', fzf.oldfiles, 'Recent files')
-      map('<Space>fg', fzf.live_grep, 'Live grep')
-      map('<Space>he', fzf.help_tags, 'Help tags')
+      map('<leader>sf', fzf.files, 'Find files')
+      map('<leader>sr', fzf.oldfiles, 'Recent files')
+      map('<leader>sg', fzf.live_grep, 'Live grep')
+      map('<leader>sh', fzf.help_tags, 'Help tags')
     end,
   },
 }

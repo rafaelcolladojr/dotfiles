@@ -99,10 +99,10 @@ return {
       map('n', '<leader>dB', function()
         dap.set_breakpoint(vim.fn.input("Breakpoint Condition: "))
       end, 'DAP conditional breakpoint')
-      map('n', '<leader>dd', function() dap.continue() end, 'DAP continue')
-      map('n', '<leader>do', function() dap.step_over() end, 'DAP step over')
-      map('n', '<leader>di', function() dap.step_into() end, 'DAP step into')
-      map('n', '<leader>dh', function() dapui.toggle() end, 'DAP UI toggle')
+      map('n', '<leader>dc', function() dap.continue() end, 'Continue')
+      map('n', '<leader>do', function() dap.step_over() end, 'Step over')
+      map('n', '<leader>di', function() dap.step_into() end, 'Step into')
+      map('n', '<leader>du', function() dapui.toggle() end, 'Toggle DAP UI')
 
       map('v', '<C-k>', function() dapui.eval() end, 'DAP eval selection')
     end

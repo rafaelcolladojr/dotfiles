@@ -104,7 +104,7 @@ return {
 
 
       -- KEYBINDINGS
-      map('<leader>lg', function() Snacks.lazygit.open() end, 'Open Lazygit')
+      map('<leader>gg', function() Snacks.lazygit.open() end, 'Lazygit')
       map('<leader>z', function() Snacks.zen() end, 'Toggle Zen mode')
       map('<leader>nm', function() Snacks.notifier.show_history() end, 'Notification history')
     end
