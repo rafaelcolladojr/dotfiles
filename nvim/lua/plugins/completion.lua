@@ -2,6 +2,7 @@ return {
   'tpope/vim-sleuth',
   {
     'saghen/blink.cmp',
+    version = '*',
     dependencies = {
       {
         'L3MON4D3/LuaSnip',
@@ -56,7 +57,7 @@ return {
           }
         }
       },
-      fuzzy = { implementation = 'lua' },
+      fuzzy = { implementation = 'prefer_native_with_fallback' },
       keymap = { preset = 'default' },
       signature = { enabled = true },
       snippets = { preset = 'luasnip' },
