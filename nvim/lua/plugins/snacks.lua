@@ -40,6 +40,15 @@ return {
       },
     },
     init = function()
+      -- Snacks.input needs explicit enable to override vim.ui.input
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'VeryLazy',
+        once = true,
+        callback = function()
+          Snacks.input.enable()
+        end,
+      })
+
       local map = function(lhs, rhs, desc)
         vim.keymap.set('n', lhs, rhs, { silent = true, desc = desc })
       end
