@@ -28,7 +28,6 @@ return {
         command_palette = true,
         long_message_to_split = true,
       },
-      -- Route notifications through snacks.nvim notifier
       routes = {
         {
           filter = { event = 'notify', find = 'No information available' },
