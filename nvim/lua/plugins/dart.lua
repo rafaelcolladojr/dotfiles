@@ -30,6 +30,15 @@ return {
             end,
           })
         end,
+        flags = {
+          debounce_text_changes = 500,
+        },
+        init_options = {
+          onlyAnalyzeProjectsWithOpenFiles = true,
+          closingLabels = true,
+          outline = false,
+          flutterOutline = false,
+        },
         color = {
           enabled = false,
           background = false,
@@ -41,6 +50,10 @@ return {
           showTodos = false,
           completeFunctionCalls = true,
           enableSnippets = true,
+          analysisExcludedFolders = {
+            vim.fn.expand("$HOME/.pub-cache"),
+            vim.fn.expand("$HOME/fvm"),
+          },
         },
       },
       debugger = {
