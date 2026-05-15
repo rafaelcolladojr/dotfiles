@@ -53,6 +53,10 @@ return {
           analysisExcludedFolders = {
             vim.fn.expand("$HOME/.pub-cache"),
             vim.fn.expand("$HOME/fvm"),
+            ".dart_tool",
+            "build",
+            ".android",
+            ".ios",
           },
         },
       },

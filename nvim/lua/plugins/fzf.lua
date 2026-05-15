@@ -9,6 +9,7 @@ return {
       },
       files = {
         hidden = true,
+        no_ignore = true,
         file_ignore_patterns = { '%.jpg', '%.png', '%.svg', '%.gif', '%.otf', '%.ttf' },
       },
       oldfiles = {
