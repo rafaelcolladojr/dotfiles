@@ -1,6 +1,11 @@
 export ZSH="$HOME/.oh-my-zsh/"
 ZSH_THEME="typewritten"
 
+# Double the prompt symbol in SSH sessions as a visual indicator
+if [[ -n "$SSH_CONNECTION" || -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
+  TYPEWRITTEN_SYMBOL="❯❯"
+fi
+
 plugins=(git zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
