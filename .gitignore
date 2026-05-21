@@ -13,3 +13,4 @@
 !zsh/.zshenv
 !zsh/.zshrc
 !.gitignore
+!CLAUDE.md
