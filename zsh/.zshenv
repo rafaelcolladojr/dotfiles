@@ -1,4 +1,8 @@
-export TERM="${TERM:-xterm-256color}"
+# Fall back to xterm-256color when TERM is unset or its terminfo is missing
+# (common on SSH targets that don't have ghostty/kitty/etc. terminfo installed)
+if [ -z "$TERM" ] || ! command -v infocmp >/dev/null 2>&1 || ! infocmp "$TERM" >/dev/null 2>&1; then
+  export TERM=xterm-256color
+fi
 export EDITOR="nvim"
 
 export ZSH_DISABLE_COMPFIX="true"
