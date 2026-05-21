@@ -53,7 +53,10 @@ vim.opt.splitbelow = true
 
 -- Enable mouse support
 vim.opt.mouse = 'a'
-vim.opt.smoothscroll = true
+-- smoothscroll added in nvim 0.10
+if vim.fn.has('nvim-0.10') == 1 then
+  vim.opt.smoothscroll = true
+end
 
 -- Enable syntax-based folding
 vim.opt.foldmethod = 'manual'

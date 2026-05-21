@@ -20,10 +20,14 @@ return {
       },
     },
     config = function(_, opts)
-      -- Ensure XDG_RUNTIME_DIR exists (macOS doesn't provide /run)
-      local runtime_dir = '/tmp/nvim-' .. (vim.env.USER or 'unknown')
-      vim.fn.mkdir(runtime_dir, 'p')
-      vim.env.XDG_RUNTIME_DIR = runtime_dir
+      -- macOS doesn't provide /run; Linux already sets XDG_RUNTIME_DIR=/run/user/$UID.
+      -- Only fall back to /tmp when nothing usable is set.
+      local current = vim.env.XDG_RUNTIME_DIR
+      if not current or vim.fn.isdirectory(current) == 0 then
+        local runtime_dir = '/tmp/nvim-' .. (vim.env.USER or 'unknown')
+        vim.fn.mkdir(runtime_dir, 'p')
+        vim.env.XDG_RUNTIME_DIR = runtime_dir
+      end
 
       local fzf = require('fzf-lua')
       fzf.setup(opts)

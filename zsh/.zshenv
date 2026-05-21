@@ -1,9 +1,10 @@
+export TERM="${TERM:-xterm-256color}"
 export EDITOR="nvim"
 
 export ZSH_DISABLE_COMPFIX="true"
 
-# User specific
-source ~/.config/zsh/custom/zshenv
+# User specific (per-machine; file is gitignored — see custom/)
+[ -f ~/.config/zsh/custom/zshenv ] && source ~/.config/zsh/custom/zshenv
 
 export DART_SDK="$HOME/Documents/development/flutter/bin"
 
@@ -21,8 +22,15 @@ export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export TERMINFO="$XDG_DATA_HOME"/terminfo
-export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo:/Applications/Ghostty.app/Contents/Resources/terminfo
+export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo
+[ -d /Applications/Ghostty.app/Contents/Resources/terminfo ] && export TERMINFO_DIRS="$TERMINFO_DIRS:/Applications/Ghostty.app/Contents/Resources/terminfo"
 
 export CUSTOM_SCRIPTS_DIR="$HOME/Documents/scripts"
 
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt:$PATH:$DART_SDK:$HOME/development/scripts/:$HOME/.pub-cache/bin/:$CUSTOM_SCRIPTS_DIR"
+# Homebrew (macOS) — prepend if present
+[ -d /opt/homebrew/bin ] && export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt:$PATH"
+
+# User-local bin (Linux convention) — prepend if present
+[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+
+export PATH="$PATH:$DART_SDK:$HOME/Documents/development/scripts/:$HOME/.pub-cache/bin/:$CUSTOM_SCRIPTS_DIR"

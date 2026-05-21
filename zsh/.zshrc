@@ -4,22 +4,29 @@ ZSH_THEME="typewritten"
 plugins=(git zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
-# User specific
-source ~/.config/zsh/custom/zshrc
+# User specific (per-machine; file is gitignored — see custom/)
+[ -f ~/.config/zsh/custom/zshrc ] && source ~/.config/zsh/custom/zshrc
 
 # Custom aliases
 alias vim='nvim'
-alias ls='ls -alG'
+# GNU ls uses --color=auto; BSD ls (macOS) uses -G
+if ls --color=auto / >/dev/null 2>&1; then
+  alias ls='ls -al --color=auto'
+else
+  alias ls='ls -alG'
+fi
 alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
 alias flutterprojects='cd ~/Documents/projects/flutter/'
 # alias gleamprojects='cd ~/Documents/projects/gleam/'
 alias dartprojects='cd ~/Documents/projects/dart/'
 # alias luaprojects='cd ~/Documents/projects/lua/'
 
-# Multi-user brew support
-unalias brew 2>/dev/null
-brewser=$(stat -f "%Su" $(which brew))
-alias brew='sudo -Hu '$brewser' brew'
+# Multi-user brew support (macOS only — brew may be owned by a different user)
+if command -v brew >/dev/null 2>&1 && [[ "$OSTYPE" == darwin* ]]; then
+  unalias brew 2>/dev/null
+  brewser=$(stat -f "%Su" "$(which brew)")
+  alias brew='sudo -Hu '$brewser' brew'
+fi
 
 
 # Config aliases
