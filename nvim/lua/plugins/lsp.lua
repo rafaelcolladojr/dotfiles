@@ -152,7 +152,7 @@ return {
             vim.keymap.set(mode, lhs, rhs, { buffer = args.buf, silent = true, desc = desc })
           end
 
-          map('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>', 'Code action')
+          map('n', '<leader>ca', vim.lsp.buf.code_action, 'Code action')
           map('n', '<leader>ch', '<cmd>Lspsaga hover_doc<CR>', 'Hover doc')
           map('n', '<leader>cr', '<cmd>Lspsaga rename<CR>', 'Rename symbol')
           map('n', 'gd', '<cmd>Lspsaga goto_definition<CR>', 'Goto definition')
