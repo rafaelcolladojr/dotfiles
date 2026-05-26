@@ -60,6 +60,17 @@ return {
 
       vim.diagnostic.config({
         update_in_insert = true,
+        virtual_text = { prefix = '●', spacing = 2, source = 'if_many' },
+        float = { border = 'rounded', source = 'if_many', header = '', prefix = '' },
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = '',
+            [vim.diagnostic.severity.WARN]  = '',
+            [vim.diagnostic.severity.INFO]  = '',
+            [vim.diagnostic.severity.HINT]  = '',
+          },
+        },
+        severity_sort = true,
       })
 
 

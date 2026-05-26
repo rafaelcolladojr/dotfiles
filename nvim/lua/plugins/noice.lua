@@ -15,8 +15,8 @@ return {
         },
       },
       lsp = {
-        -- Native vim.lsp.buf.hover handles hover; blink.cmp handles signature
-        hover = { enabled = false },
+        -- noice handles hover (markdown float); blink.cmp handles signature
+        hover = { enabled = true },
         signature = { enabled = false },
         override = {
           ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
