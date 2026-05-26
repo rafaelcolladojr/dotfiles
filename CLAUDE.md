@@ -25,7 +25,7 @@ Leader is `<space>` (both `mapleader` and `maplocalleader`). Which-key groups un
 - Capabilities come from `blink.cmp` (not nvim-cmp).
 - Per-server config uses the new `vim.lsp.config(name, {...})` API. Dart is intentionally commented out because Dart LSP is configured by `flutter-tools.nvim` instead (`plugins/dart.lua`); don't re-enable `dartls` here without removing flutter-tools' version.
 - A `RaffLspAttach` autocmd installs the buffer-local keymaps (`gd`, `gr`, `<leader>ca`, etc.) and, if the client supports formatting, registers a `BufWritePre` format hook on a separate `RaffLspFormatOnSave` group (cleared per-buffer to avoid duplicate registration).
-- There is a non-trivial monkey-patch of `lspsaga.diagnostic.goto_pos`: Neovim 0.12 made `vim.diagnostic.jump`'s `on_jump` async, which closed the saga float before code-action enrichment ran. The patch reopens the float synchronously inside `vim.schedule` after the jump. Preserve this behavior if upgrading lspsaga.
+- All LSP UI uses native handlers (`vim.lsp.buf.hover/rename/code_action`, `vim.diagnostic.jump`) or fzf-lua pickers (`gd`/`gi`/`gr`). `vim.ui.select`/`vim.ui.input` are overridden by snacks (`plugins/snacks.lua`) so native handlers get the snacks UI. Lspsaga was removed to drop a fragile monkey-patch and a stuck-`pending_request` bug in saga's code_action.
 
 ### Dart/Flutter (`plugins/dart.lua`)
 

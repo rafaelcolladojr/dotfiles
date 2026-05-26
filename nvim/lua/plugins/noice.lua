@@ -15,7 +15,7 @@ return {
         },
       },
       lsp = {
-        -- Disable LSP overrides — LspSaga handles hover, blink.cmp handles signature
+        -- Native vim.lsp.buf.hover handles hover; blink.cmp handles signature
         hover = { enabled = false },
         signature = { enabled = false },
         override = {

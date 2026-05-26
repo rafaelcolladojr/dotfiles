@@ -16,7 +16,6 @@ return {
         dap_ui = true,
         gitsigns = true,
         harpoon = true,
-        lsp_saga = true,
         mini = { enabled = true },
         native_lsp = {
           enabled = true,
