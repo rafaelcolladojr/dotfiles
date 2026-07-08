@@ -73,6 +73,15 @@ return {
       },
     },
     init = function()
+      -- flutter-tools' ftplugin guards LSP attach behind b:flutter_tools_did_ftplugin,
+      -- which survives `:e` (same bufnr) so the buffer never reattaches dartls on reload.
+      -- Clear it before the ftplugin re-sources so attach() runs again.
+      vim.api.nvim_create_autocmd('BufReadPre', {
+        pattern = '*.dart',
+        callback = function(args)
+          vim.b[args.buf].flutter_tools_did_ftplugin = nil
+        end,
+      })
       local map = function(lhs, rhs, desc)
         vim.keymap.set('n', lhs, rhs, { silent = true, desc = desc })
       end
